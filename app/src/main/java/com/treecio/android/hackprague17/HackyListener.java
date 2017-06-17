@@ -41,7 +41,7 @@ public class HackyListener implements AIListener {
 
     final HackyFactory factory = new HackyFactory();
 
-    List<CallAction> actions = new ArrayList<CallAction>();
+    List<CallAction> actions = new ArrayList<>();
 
 
     public List<CallAction> process() throws ExecutionException, InterruptedException {
