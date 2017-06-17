@@ -8,14 +8,12 @@ import ai.api.model.Result;
  * Created by xcubae00 on 17.6.2017.
  */
 
-public class MeetAction extends CallAction {
+public class AddressAction extends CallAction {
 
-    public MeetAction (Result result) {
+    public AddressAction (Result result) {
         super(result);
-        type = CallActionType.Meet;
+        type = CallActionType.Address;
 
-        description = "Meet description";
-
+        description = "Address description";
     }
-
 }

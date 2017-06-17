@@ -17,8 +17,8 @@ import ai.api.model.AIResponse;
 import ai.api.model.Result;
 import ai.api.model.Status;
 
-import com.treecio.android.hackprague17.HackyItem.HackyAction;
 import com.treecio.android.hackprague17.HackyItem.HackyFactory;
+import com.treecio.android.hackprague17.model.CallAction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,10 +41,10 @@ public class HackyListener implements AIListener {
 
     final HackyFactory factory = new HackyFactory();
 
-    List<HackyAction> actions = new ArrayList<HackyAction>();
+    List<CallAction> actions = new ArrayList<CallAction>();
 
 
-    public List<HackyAction> process() throws ExecutionException, InterruptedException {
+    public List<CallAction> process() throws ExecutionException, InterruptedException {
 
         actions.clear();
 
