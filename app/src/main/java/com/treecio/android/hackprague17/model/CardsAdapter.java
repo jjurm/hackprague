@@ -38,7 +38,6 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
     public CardsAdapter(StoragePort storagePort) {
         this.storagePort = storagePort;
         this.callsMap = storagePort.getData().getCalls();
-
         this.calls = sortByDate(callsMap);
     }
 
