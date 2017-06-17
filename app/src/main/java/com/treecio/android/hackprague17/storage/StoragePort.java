@@ -25,8 +25,8 @@ public class StoragePort {
     private Context mContext;
     private Gson mGson;
 
-    public StoragePort(Context mContext) {
-        this.mContext = mContext;
+    public StoragePort(Context context) {
+        this.mContext = context;
         this.mGson = new Gson();
     }
 
@@ -34,12 +34,12 @@ public class StoragePort {
         return mContext.getSharedPreferences(PREF_DATA, Context.MODE_PRIVATE);
     }
 
-    void storeData(StoredData data) {
+    public void storeData(StoredData data) {
         String json = mGson.toJson(data);
         getPrefs().edit().putString(KEY_DATA, json).apply();
     }
 
-    StoredData getData() {
+    public StoredData getData() {
         String json = getPrefs().getString(KEY_DATA, null);
         if (json != null) {
             return mGson.fromJson(json, StoredData.class);
