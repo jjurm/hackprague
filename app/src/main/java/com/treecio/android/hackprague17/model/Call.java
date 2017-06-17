@@ -10,6 +10,8 @@ import java.util.Date;
 
 public class Call {
 
+    int id;
+
     String callerName;
 
     Uri photo;
