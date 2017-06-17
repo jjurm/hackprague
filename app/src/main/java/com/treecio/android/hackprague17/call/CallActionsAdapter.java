@@ -1,5 +1,6 @@
 package com.treecio.android.hackprague17.call;
 
+import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -38,18 +39,33 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
 
-        List<CallAction> actions = call.getCallActions();
-        switch (actions.get(position).getType()) {
-            case Address:
+        CallAction action = call.getCallActions().get(position);
 
+
+        switch (action.getType()) {
+            case Address:
+                    holder.actionIcon.setImageResource(R.drawable.ic_place_black_24dp);
                 break;
             case Meet:
+                holder.actionIcon.setImageResource(R.drawable.ic_group_black_24dp);
                 break;
             case Remind:
+                holder.actionIcon.setImageResource(R.drawable.ic_notifications_black_24dp);
                 break;
             case Log:
+                holder.actionIcon.setImageResource(R.drawable.ic_format_list_bulleted_black_24dp);
                 break;
         }
+
+        holder.actionText.setText(action.getDescription());
+
+        holder.actionCard.setOnClickListener(new View.OnClickListener () {
+
+            @Override
+            public void onClick(View v) {
+                //TODO send to app
+            }
+        });
     }
 
     @Override

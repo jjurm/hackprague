@@ -34,4 +34,8 @@ public class Call {
     }
 
     public List<CallAction> getCallActions() { return callActions; }
+
+    public int getId() {
+        return id;
+    }
 }

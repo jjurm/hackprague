@@ -1,5 +1,6 @@
 package com.treecio.android.hackprague17.model;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.treecio.android.hackprague17.R;
+import com.treecio.android.hackprague17.call.CallActionsActivity;
 import com.treecio.android.hackprague17.storage.StoragePort;
 import com.treecio.android.hackprague17.storage.StoredData;
 
@@ -35,8 +37,11 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
     private HashMap<Integer, Call> callsMap;
     private List<Call> calls;
 
-    public CardsAdapter(StoragePort storagePort) {
+    private Context context;
+
+    public CardsAdapter(StoragePort storagePort, Context context) {
         this.storagePort = storagePort;
+        this.context = context;
         this.callsMap = storagePort.getData().getCalls();
         this.calls = sortByDate(callsMap);
     }
@@ -67,7 +72,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
 
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
-        Call call = calls.get(position);
+        final Call call = calls.get(position);
 
         holder.callerName.setText(call.callerName);
 
@@ -81,7 +86,9 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
 
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent();
+                Intent intent = new Intent(context, CallActionsActivity.class);
+                intent.putExtra("id", call.getId());
+                context.startActivity(intent);
             }
         });
     }
