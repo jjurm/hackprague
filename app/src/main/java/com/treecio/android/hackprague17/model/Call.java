@@ -12,6 +12,12 @@ public class Call {
 
     int id;
 
+    public Call(String name, Uri photo, Date date) {
+        this.callerName = name;
+        this.photo = photo;
+        this.date = date;
+    }
+
     String callerName;
 
     Uri photo;
