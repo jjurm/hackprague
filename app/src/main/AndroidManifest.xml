@@ -36,5 +36,7 @@
         <service android:name=".CallRecorderService" />
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
 
 </manifest>
