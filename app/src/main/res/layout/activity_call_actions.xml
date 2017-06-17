@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/photo"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             />
@@ -25,12 +25,12 @@
             android:id="@+id/callerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/photo"
             android:text="Pavol Drotár"
             android:textColor="@android:color/black"
-            android:textSize="30sp"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/photo"
-            android:layout_marginStart="16dp" />
+            android:textSize="36sp" />
 
         <TextView
             android:id="@+id/date"
@@ -39,7 +39,7 @@
             android:layout_alignStart="@+id/callerName"
             android:layout_below="@+id/callerName"
             android:text="31/05/2017"
-            android:textSize="18sp" />
+            android:textSize="24sp" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/callActionsList"

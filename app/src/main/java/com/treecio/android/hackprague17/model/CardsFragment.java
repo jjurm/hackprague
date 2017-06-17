@@ -40,7 +40,7 @@ public class CardsFragment extends Fragment {
 
         //Add adapter to RecyclerView
         StoragePort storagePort = new StoragePort(getActivity());
-        CardsAdapter adapter = new CardsAdapter(storagePort);
+        CardsAdapter adapter = new CardsAdapter(storagePort, getActivity());
         rView.setAdapter(adapter);
 
         //Set LayoutManager of the RecyclerView
