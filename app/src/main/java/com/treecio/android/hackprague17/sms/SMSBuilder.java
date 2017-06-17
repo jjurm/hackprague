@@ -1,5 +1,7 @@
 package com.treecio.android.hackprague17.sms;
 
+import android.telephony.SmsManager;
+
 import java.io.File;
 
 import ezvcard.Ezvcard;
@@ -15,6 +17,7 @@ import ezvcard.util.TelUri;
 
 /**
  * Created by Pali on 18.06.2017.
+ * Use String sms = new SMSBuilder().addName("Pali").addAddress("Whatever").addPhone("Whatever").addEmail("dsdkjk").build(VCardVersion.V4_0);
  */
 
 public class SMSBuilder {
@@ -25,10 +28,9 @@ public class SMSBuilder {
         this.vCard = new VCard();
     }
 
-    public SMSBuilder addName(String familyName, String givenName) {
+    public SMSBuilder addName(String name) {
         StructuredName n = new StructuredName();
-        n.setFamily(familyName);
-        n.setGiven(givenName);
+        n.setGiven(name);
         vCard.setStructuredName(n);
 
         return this;
@@ -60,5 +62,10 @@ public class SMSBuilder {
 
     public String build(VCardVersion v) {
         return Ezvcard.write(vCard).version(v).go();
+    }
+
+    public void SendSMS(String number, String sms) {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(number, null, sms, null, null);
     }
 }
