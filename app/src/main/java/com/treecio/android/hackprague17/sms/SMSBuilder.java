@@ -1,5 +1,7 @@
 package com.treecio.android.hackprague17.sms;
 
+import android.content.Context;
+import android.content.Intent;
 import android.telephony.SmsManager;
 
 import java.io.File;
@@ -23,9 +25,11 @@ import ezvcard.util.TelUri;
 public class SMSBuilder {
 
     private VCard vCard;
+    Context context;
 
-    public SMSBuilder() {
+    public SMSBuilder(Context context) {
         this.vCard = new VCard();
+        this.context = context;
     }
 
     public SMSBuilder addName(String name) {
@@ -68,4 +72,12 @@ public class SMSBuilder {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(number, null, sms, null, null);
     }
+
+    public void SendSMSInApp(String number, String sms) {
+        Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+        sendIntent.putExtra("sms_body", sms);
+        sendIntent.setType("vnd.android-dir/mms-sms");
+        context.startActivity(sendIntent);
+    }
+
 }
