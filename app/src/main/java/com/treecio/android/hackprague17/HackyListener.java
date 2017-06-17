@@ -17,14 +17,17 @@ import ai.api.model.AIResponse;
 import ai.api.model.Result;
 import ai.api.model.Status;
 
-import com.google.gson.JsonElement;
+import com.treecio.android.hackprague17.HackyItem.HackyAction;
+import com.treecio.android.hackprague17.HackyItem.HackyFactory;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
 
 public class HackyListener implements AIListener {
 
-    private final String TOKEN = "a57e003f19e5402fa73751df094d7d37";
+    final String TOKEN = "a57e003f19e5402fa73751df094d7d37";
 
     final String TAG = "HackyListener";
 
@@ -36,7 +39,14 @@ public class HackyListener implements AIListener {
 
     final AIDataService aiDataService = new AIDataService(config);
 
-    public void process() {
+    final HackyFactory factory = new HackyFactory();
+
+    List<HackyAction> actions = new ArrayList<HackyAction>();
+
+
+    public List<HackyAction> process() throws ExecutionException, InterruptedException {
+
+        actions.clear();
 
         String text = "Could you please call your dad?";
 
@@ -61,9 +71,11 @@ public class HackyListener implements AIListener {
                     onResult(aiResponse);
                 }
             }
-        }.execute(aiRequest);
+        }.execute(aiRequest).get();
 
         Log.i(TAG, "Process exit");
+
+        return actions;
     }
 
     /**
@@ -80,21 +92,7 @@ public class HackyListener implements AIListener {
         //get resolved query
         final Result result = response.getResult();
 
-        String query = result.getResolvedQuery();
-        Log.i(TAG, "Resolved query: " + query);
-
-        //get action
-        String action = result.getAction();
-        Log.i(TAG, "Action: " + action);
-
-        //get parameters
-        final HashMap<String, JsonElement> params = result.getParameters();
-        if (params != null && !params.isEmpty()) {
-            Log.i(TAG, "Parameters: ");
-            for (final Map.Entry<String, JsonElement> entry : params.entrySet()) {
-                Log.i(TAG, String.format("%s: %s", entry.getKey(), entry.getValue().toString()));
-            }
-        }
+        actions.add(factory.create(result));
     }
 
     @Override
