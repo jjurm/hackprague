@@ -1,5 +1,7 @@
 package com.treecio.android.hackprague17.storage;
 
+import android.annotation.SuppressLint;
+
 import com.treecio.android.hackprague17.model.Call;
 
 import java.util.ArrayList;
@@ -14,8 +16,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class StoredData {
 
+    @SuppressLint("UseSparseArrays")
     private HashMap<Integer, Call> calls = new HashMap<>();
-    private AtomicInteger nextInt = new AtomicInteger(1);
+    private int nextInt = 1;
 
     private StoredData() {
 
@@ -29,7 +32,11 @@ public class StoredData {
         return calls.get(id);
     }
 
-    public static StoredData newEmptyStoredData() {
+    public int obtainNextCallIndex() {
+        return nextInt++;
+    }
+
+    static StoredData newEmptyStoredData() {
         return new StoredData();
     }
 
