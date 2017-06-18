@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="142dp">
 
         <ImageView
             android:id="@+id/actionIcon"
@@ -35,27 +35,39 @@
             android:textSize="18sp"
             />
 
+        <TextView
+            android:id="@+id/actionDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Meeting in the Town Hall tomorrow at 5PM"
+            android:textColor="@color/cardview_dark_background"
+            android:textSize="12sp"
+            android:layout_below="@+id/actionIcon"
+            android:layout_toEndOf="@+id/actionIcon" />
+
         <Button
             android:id="@+id/actionOpenButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/actionText"
-            android:layout_below="@+id/actionText"
-            android:layout_marginStart="47dp"
+            android:layout_marginStart="34dp"
             android:padding="2dp"
             android:text="Open"
-            android:theme="@style/PrimaryFlatButton"/>
+            android:theme="@style/PrimaryFlatButton"
+            android:layout_below="@+id/actionDescription"
+            android:layout_alignStart="@+id/actionDescription" />
 
         <Button
             android:id="@+id/actionShareButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/actionText"
             android:layout_marginStart="33dp"
-            android:layout_toEndOf="@+id/actionOpenButton"
             android:padding="2dp"
             android:text="Share"
-            android:theme="@style/PrimaryFlatButton"/>
+            android:theme="@style/PrimaryFlatButton"
+            android:layout_below="@+id/actionDescription"
+            android:layout_toEndOf="@+id/actionOpenButton" />
 
     </RelativeLayout>
 

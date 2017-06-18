@@ -62,6 +62,7 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
         }
 
         holder.actionText.setText(action.getTitle());
+        holder.actionDescription.setText(action.getDescription());
 
         holder.actionOpenButton.setOnClickListener(new View.OnClickListener(){
 
@@ -148,14 +149,17 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
 
     public static class CardViewHolder extends RecyclerView.ViewHolder {
         protected TextView actionText;
+        protected TextView actionDescription;
         protected ImageView actionIcon;
         protected CardView actionCard;
         protected Button actionOpenButton;
         protected Button actionShareButton;
 
+
         public CardViewHolder(View v) {
             super(v);
             actionText =  (TextView) v.findViewById(R.id.actionText);
+            actionDescription = (TextView) v.findViewById(R.id.actionDescription);
             actionIcon = (ImageView)  v.findViewById(R.id.actionIcon);
             actionCard = (CardView) v.findViewById(R.id.actionCard);
             actionOpenButton = (Button) v.findViewById(R.id.actionOpenButton);
