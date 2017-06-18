@@ -1,6 +1,7 @@
 package com.treecio.android.hackprague17.call;
 
-import android.icu.util.Calendar;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,8 +15,11 @@ import com.treecio.android.hackprague17.Calendar.CalendarAction;
 import com.treecio.android.hackprague17.R;
 import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.model.CallAction;
+import com.treecio.android.hackprague17.sms.SMSBuilder;
 
 import java.util.Date;
+
+import ezvcard.VCardVersion;
 
 /**
  * Created by Pali on 17.06.2017.
@@ -64,17 +68,31 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
             public void onClick(View v) {
                 switch (action.getType()) {
                     case Address:
+                        String strUri = "geo:0,0?q=" + action.getDescription();
+                        Uri uri = Uri.parse(strUri);
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(uri);
+                        if (intent.resolveActivity(v.getContext().getPackageManager()) != null) {
+                            v.getContext().startActivity(intent);
+                        }
                         break;
                     case Meet:
                         CalendarAction ca = new CalendarAction(v.getContext());
 
-
-
-                        //ca.createPersonalEvent(action.getDescription(), action.getTitle(),action.getDate(), action.getDate().);
+                        ca.createPersonalEvent(action.getDescription(), action.getTitle(), new Date(), new Date());
                         break;
                     case Remind:
+                        CalendarAction c = new CalendarAction(v.getContext());
+
+                        c.createPersonalEvent(action.getDescription(), action.getTitle(), new Date(), new Date());
+
                         break;
                     case Contact:
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(action.getTitle()));
+                        if (i.resolveActivity(v.getContext().getPackageManager()) != null) {
+                            v.getContext().startActivity(i);
+                        }
                         break;
                 }
             }
@@ -86,8 +104,13 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
             public void onClick(View v) {
                 switch (action.getType()) {
                     case Address:
+                        String sms = new SMSBuilder(v.getContext()).addAddress(action.getDescription()).build(VCardVersion.V4_0);
+                        SMSBuilder.SendSMS(call.getNumber(), sms);
                         break;
                     case Meet:
+                        CalendarAction ca = new CalendarAction(v.getContext());
+
+                        ca.createSharedEvent(action.getDescription(), action.getTitle(), new Date(), new Date(), "pavol.drotar3@gmail.com");
                         break;
                     case Remind:
                         break;
@@ -113,7 +136,7 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
         public CardViewHolder(View v) {
             super(v);
             actionText =  (TextView) v.findViewById(R.id.actionText);
-            actionIcon = (ImageView)  v.findViewById(R.id.photo);
+            actionIcon = (ImageView)  v.findViewById(R.id.actionIcon);
             actionCard = (CardView) v.findViewById(R.id.actionCard);
             actionOpenButton = (Button) v.findViewById(R.id.actionOpenButton);
             actionShareButton = (Button) v.findViewById(R.id.actionShareButton);

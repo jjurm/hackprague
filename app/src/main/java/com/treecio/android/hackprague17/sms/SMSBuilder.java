@@ -68,7 +68,7 @@ public class SMSBuilder {
         return Ezvcard.write(vCard).version(v).go();
     }
 
-    public void SendSMS(String number, String sms) {
+    public static void SendSMS(String number, String sms) {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage(number, null, sms, null, null);
     }
