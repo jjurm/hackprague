@@ -51,7 +51,8 @@
             android:id="@+id/callActionsList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_below="@+id/photo"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/photo"/>
+            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
