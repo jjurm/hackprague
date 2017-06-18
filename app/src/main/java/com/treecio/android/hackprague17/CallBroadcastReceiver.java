@@ -22,18 +22,20 @@ public class CallBroadcastReceiver extends BroadcastReceiver {
                 String state = bundle.getString(TelephonyManager.EXTRA_STATE);
                 if (state == null) return;
                 Log.d(TAG, "state: " + state);
+                Intent service = new Intent(context, CallRecorderService.class);
                 if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
-                    // do nothing
+                    // send number
+                    service.putExtra(CallRecorderService.EXTRA_SERVICE_ACTION, CallRecorderService.ACTION_PREPARE);
+                    String number = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+                    service.putExtra(CallRecorderService.EXTRA_NUMBER, number);
                 } else if (state.equals(TelephonyManager.EXTRA_STATE_OFFHOOK)) {
                     // start service
-                    Intent service = new Intent(context, CallRecorderService.class);
-                    context.startService(service);
+                    service.putExtra(CallRecorderService.EXTRA_SERVICE_ACTION, CallRecorderService.ACTION_START);
                 } else if (state.equals(TelephonyManager.EXTRA_STATE_IDLE)) {
                     // stop service
-                    Intent service = new Intent(context, CallRecorderService.class);
-                    service.putExtra(CallRecorderService.EXTRA_STOP_SERVICE, true);
-                    context.startService(service);
+                    service.putExtra(CallRecorderService.EXTRA_SERVICE_ACTION, CallRecorderService.ACTION_STOP);
                 }
+                context.startService(service);
             }
         }
     }
