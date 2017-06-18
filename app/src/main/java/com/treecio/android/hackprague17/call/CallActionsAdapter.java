@@ -17,6 +17,7 @@ import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.model.CallAction;
 import com.treecio.android.hackprague17.sms.SMSBuilder;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import ezvcard.VCardVersion;
@@ -106,24 +107,34 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                 switch (action.getType()) {
                     case Address:
                         sms = new SMSBuilder(v.getContext()).addAddress(action.getDescription()).build(VCardVersion.V4_0);
-                        SMSBuilder.SendSMS(call.getNumber(), sms);
+                        SMSBuilder.SendSMSInApp(call.getNumber(), sms);
                         break;
                     case Meet:
                         CalendarAction ca = new CalendarAction(v.getContext());
 
+                        Calendar cal = Calendar.getInstance();
+                        Calendar cal2 = Calendar.getInstance();
+                        cal.set(Calendar.HOUR_OF_DAY,18);
+                        cal.set(Calendar.MINUTE,0);
+                        cal2.set(Calendar.HOUR_OF_DAY, 20);
+                        cal2.set(Calendar.MINUTE, 0);
+
+                        Date d1 = cal.getTime();
+                        Date d2 = cal2.getTime();
+
                         if(call.getId() == 4) {
-                            ca.createSharedEvent(action.getDescription(), action.getTitle(), new Date(), new Date(), action.getContactinfo());
+                            ca.createSharedEvent(action.getDescription(), action.getTitle(), d1, d2, action.getContactinfo());
                         } else {
                             ca.createSharedEvent(action.getDescription(), action.getTitle(), new Date(), new Date(), "pavol.drotar3@gmail.com");
                         }
                         break;
                     case Remind:
                         sms = new SMSBuilder(v.getContext()).addNote(action.getDescription()).build(VCardVersion.V4_0);
-                        SMSBuilder.SendSMS(call.getNumber(), sms);
+                        SMSBuilder.SendSMSInApp(call.getNumber(), sms);
                         break;
                     case Contact:
                         sms = new SMSBuilder(v.getContext()).addName(action.getTitle()).addPhone(action.getDescription()).build(VCardVersion.V4_0);
-                        SMSBuilder.SendSMS(call.getNumber(), sms);
+                        SMSBuilder.SendSMSInApp(call.getNumber(), sms);
                         break;
                 }
             }

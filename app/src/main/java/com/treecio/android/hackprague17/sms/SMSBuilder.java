@@ -25,7 +25,7 @@ import ezvcard.util.TelUri;
 public class SMSBuilder {
 
     private VCard vCard;
-    Context context;
+    static Context context;
 
     public SMSBuilder(Context context) {
         this.vCard = new VCard();
@@ -78,7 +78,7 @@ public class SMSBuilder {
             smsManager.sendTextMessage(number, null, sms, null, null);
     }
 
-    public void SendSMSInApp(String number, String sms) {
+    public static void SendSMSInApp(String number, String sms) {
         Intent sendIntent = new Intent(Intent.ACTION_VIEW);
         sendIntent.putExtra("sms_body", sms);
         sendIntent.setType("vnd.android-dir/mms-sms");
