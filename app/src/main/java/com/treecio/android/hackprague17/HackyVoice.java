@@ -1,6 +1,7 @@
 package com.treecio.android.hackprague17;
 
 import android.content.Context;
+import android.os.Handler;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -18,9 +19,12 @@ public class HackyVoice implements RecognitionListener {
 
     ServiceNotifiesListener listener;
 
+    private Context con;
+
     public HackyVoice(Context parent, ServiceNotifiesListener l) {
 
-        speech = SpeechRecognizer.createSpeechRecognizer(parent);
+        con  = parent;
+        speech = SpeechRecognizer.createSpeechRecognizer(con);
         speech.setRecognitionListener(this);
 
         listener = l;
@@ -32,13 +36,22 @@ public class HackyVoice implements RecognitionListener {
 
     public void listen() {
         Log.i(TAG, "Listening");
-        speech.startListening(recognizerIntent);
+        runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                speech.startListening(recognizerIntent);
+            }
+        });
     }
 
     public void stop() {
         Log.i(TAG, "Stopping");
-        speech.stopListening();
-    }
+        runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                speech.stopListening();
+            }
+        });    }
 
     public String getText() {
         return text;
@@ -77,7 +90,6 @@ public class HackyVoice implements RecognitionListener {
     @Override
     public void onReadyForSpeech(Bundle arg0) {
         Log.i(TAG, "onReadyForSpeech");
-        listener.listeningEnded();
     }
 
     @Override
@@ -86,11 +98,11 @@ public class HackyVoice implements RecognitionListener {
         String entry = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION).get(0);
         Log.i(TAG, "T: " + entry);
         text += entry;
+        listener.listeningEnded();
     }
 
     @Override
     public void onRmsChanged(float rmsdB) {
-        Log.i(TAG, "dB: " + rmsdB);
     }
 
     public static String getErrorText(int errorCode) {
@@ -129,6 +141,11 @@ public class HackyVoice implements RecognitionListener {
         }
         Log.i(TAG, message);
         return message;
+    }
+
+    void runOnMainThread(Runnable r) {
+        Handler mainHandler = new Handler(con.getMainLooper());
+        mainHandler.post(r);
     }
 
 }
