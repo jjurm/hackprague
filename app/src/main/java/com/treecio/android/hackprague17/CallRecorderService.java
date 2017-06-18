@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.treecio.android.hackprague17.HackyItem.MeetAction;
 import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.model.CallAction;
 import com.treecio.android.hackprague17.storage.NotificationBuilder;
@@ -135,6 +136,10 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
         List<CallAction> actions = new ArrayList<>();
         if (recordingId == 4) {
             // mocking
+            MeetAction meetAction = new MeetAction();
+            meetAction.setDescription("Meet in Hyde Park 6PM.");
+            meetAction.setTitle("Meeting");
+            actions.add(meetAction);
 
         } else {
             try {
