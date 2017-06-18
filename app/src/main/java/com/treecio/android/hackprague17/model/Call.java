@@ -61,6 +61,10 @@ public class Call {
         this.callerName = callerName;
     }
 
+    public void setCallActions(List<CallAction> actions) {
+        callActions = actions;
+    }
+
     public void setPhoto(Uri photo) {
         this.photo = photo;
     }
