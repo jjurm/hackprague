@@ -38,6 +38,12 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        refresh();
+    }
+
     public void loadFakeData() {
         StoredData d = storagePort.getData();
         if (d.getLastUsedIndex() != 0) {
@@ -100,7 +106,7 @@ public class MainActivity extends FragmentActivity {
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
-        transaction.replace(R.id.cardsFragment, n);
+        transaction.replace(R.id.fragmentHolder, n);
         transaction.commit();
     }
 }
