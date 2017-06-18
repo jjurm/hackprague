@@ -9,6 +9,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.treecio.android.hackprague17.model.Call;
+import com.treecio.android.hackprague17.storage.NotificationBuilder;
 import com.treecio.android.hackprague17.storage.StoragePort;
 
 import java.util.Date;
@@ -134,6 +135,12 @@ public class CallRecorderService extends Service {
 
         }
 
+        // notif
+
+        storagePort.getData().getCalls().put(call.getId(), call);
+        storagePort.saveData();
+
+        new NotificationBuilder(getBaseContext()).createNotification(call);
     }
 
 }
