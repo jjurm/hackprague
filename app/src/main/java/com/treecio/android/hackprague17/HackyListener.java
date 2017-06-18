@@ -20,6 +20,8 @@ import ai.api.model.Status;
 import com.treecio.android.hackprague17.HackyItem.HackyFactory;
 import com.treecio.android.hackprague17.model.CallAction;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -43,16 +45,10 @@ public class HackyListener implements AIListener {
 
     List<CallAction> actions = new ArrayList<>();
 
+    protected void processSentence(String t) throws ExecutionException, InterruptedException {
 
-    public List<CallAction> process() throws ExecutionException, InterruptedException {
-
-        actions.clear();
-
-        String text = "Could you please call your dad?";
-
-        aiRequest.setQuery(text);
-
-        Log.i(TAG, "ASKING: " + text);
+        aiRequest.setQuery(t);
+        Log.i(TAG, "ASKING: " + t);
 
         new AsyncTask<AIRequest, Void, AIResponse>() {
             @Override
@@ -72,8 +68,20 @@ public class HackyListener implements AIListener {
                 }
             }
         }.execute(aiRequest).get();
+    }
 
-        Log.i(TAG, "Process exit");
+
+    public List<CallAction> process(List<String> data) throws ExecutionException, InterruptedException {
+
+        actions.clear();
+
+        Log.i(TAG, "Processing data");
+
+        for (String t: data) {
+            processSentence(t);
+        }
+
+        Log.i(TAG, "Data processed");
 
         return actions;
     }

@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by JJurM on 17/06/2017.
- */
-
 public class Call {
 
     int id;
@@ -59,6 +55,10 @@ public class Call {
 
     public void setCallerName(String callerName) {
         this.callerName = callerName;
+    }
+
+    public void setCallActions(List<CallAction> actions) {
+        callActions = actions;
     }
 
     public void setPhoto(Uri photo) {

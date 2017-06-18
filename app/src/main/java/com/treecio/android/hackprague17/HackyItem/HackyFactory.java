@@ -28,7 +28,7 @@ public class HackyFactory {
             case "Address":
                 return new AddressAction(result);
             case "Log":
-                return new LogAction(result);
+                return new ContactAction(result);
         }
 
         return null;

@@ -9,17 +9,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class HackyVoice implements RecognitionListener {
 
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
     private static String TAG = "HackyVoice";
 
-    private String text = "";
-
     ServiceNotifiesListener listener;
 
     private Context con;
+
+    List<String> data = new ArrayList<>();
 
     public HackyVoice(Context parent, ServiceNotifiesListener l) {
 
@@ -36,6 +39,12 @@ public class HackyVoice implements RecognitionListener {
 
     public void listen() {
         Log.i(TAG, "Listening");
+        data.clear();
+        proceed();
+    }
+
+    public void proceed() {
+        Log.i(TAG, "Proceeding");
         runOnMainThread(new Runnable() {
             @Override
             public void run() {
@@ -53,8 +62,8 @@ public class HackyVoice implements RecognitionListener {
             }
         });    }
 
-    public String getText() {
-        return text;
+    public List<String> getData() {
+        return data;
     }
 
     @Override
@@ -75,6 +84,7 @@ public class HackyVoice implements RecognitionListener {
     public void onError(int errorCode) {
         String errorMessage = getErrorText(errorCode);
         Log.d(TAG, "FAILED " + errorMessage);
+        listener.listeningEnded();
     }
 
     @Override
@@ -97,7 +107,7 @@ public class HackyVoice implements RecognitionListener {
         Log.i(TAG, "onResults");
         String entry = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION).get(0);
         Log.i(TAG, "T: " + entry);
-        text += entry;
+        data.add(entry);
         listener.listeningEnded();
     }
 
@@ -105,7 +115,7 @@ public class HackyVoice implements RecognitionListener {
     public void onRmsChanged(float rmsdB) {
     }
 
-    public static String getErrorText(int errorCode) {
+    public String getErrorText(int errorCode) {
         String message;
         switch (errorCode) {
             case SpeechRecognizer.ERROR_AUDIO:
@@ -139,7 +149,6 @@ public class HackyVoice implements RecognitionListener {
                 message = "Didn't understand, please try again.";
                 break;
         }
-        Log.i(TAG, message);
         return message;
     }
 
