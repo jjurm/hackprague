@@ -4,11 +4,7 @@ import android.annotation.SuppressLint;
 
 import com.treecio.android.hackprague17.model.Call;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Object holding a bundle of data including call history.
@@ -34,6 +30,23 @@ public class StoredData {
 
     public int obtainNextCallIndex() {
         return nextInt++;
+    }
+
+    /**
+     * Will not increase it's index. Don't use for creating new Calls.
+     *
+     * @return
+     */
+    public int getLastUsedIndex() {
+        return nextInt - 1;
+    }
+
+    /**
+     * Only use for mocking data
+     * @param index
+     */
+    public void setNextIndex(int index) {
+        this.nextInt = index;
     }
 
     static StoredData newEmptyStoredData() {

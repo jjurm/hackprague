@@ -15,6 +15,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
+import java.util.Date;
 
 /**
  * Provides access to application's storage. Use this to load {@link StoredData}.
@@ -34,7 +35,11 @@ public class StoragePort {
     }
 
     public void loadData() {
-        Gson gson = new GsonBuilder().registerTypeAdapter(Uri.class, new UriDeserializer()).create();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Uri.class, new UriDeserializer())
+                .registerTypeAdapter(Date.class, ser)
+                .registerTypeAdapter(Date.class, deser)
+                .create();
         String json = getPrefs().getString(KEY_DATA, null);
         if (json != null) {
             storedData = gson.fromJson(json, StoredData.class);
@@ -44,7 +49,11 @@ public class StoragePort {
     }
 
     public void saveData() {
-        Gson gson = new GsonBuilder().registerTypeAdapter(Uri.class, new UriSerializer()).create();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Uri.class, new UriSerializer())
+                .registerTypeAdapter(Date.class, ser)
+                .registerTypeAdapter(Date.class, deser)
+                .create();
         String json = gson.toJson(storedData);
         getPrefs().edit().putString(KEY_DATA, json).apply();
     }
@@ -73,5 +82,21 @@ public class StoragePort {
             return Uri.parse(src.getAsString());
         }
     }
+
+    JsonSerializer<Date> ser = new JsonSerializer<Date>() {
+        @Override
+        public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext
+                context) {
+            return src == null ? null : new JsonPrimitive(src.getTime());
+        }
+    };
+
+    JsonDeserializer<Date> deser = new JsonDeserializer<Date>() {
+        @Override
+        public Date deserialize(JsonElement json, Type typeOfT,
+                                JsonDeserializationContext context) throws JsonParseException {
+            return json == null ? null : new Date(json.getAsLong());
+        }
+    };
 
 }
