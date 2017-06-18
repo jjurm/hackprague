@@ -52,7 +52,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
 
             @Override
             public int compare(Map.Entry<Integer, Call> o1, Map.Entry<Integer, Call> o2) {
-                if(o2.getValue().date.after(o2.getValue().date)) return -1;
+                if(o1.getValue().date.after(o2.getValue().date)) return -1;
                 else return 1;
             }
         });

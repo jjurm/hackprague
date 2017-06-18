@@ -54,5 +54,6 @@ public class CallActionsActivity extends Activity {
         CallActionsAdapter adapter = new CallActionsAdapter(call);
         rv.setAdapter(adapter);
 
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

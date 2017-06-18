@@ -33,7 +33,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".call.CallActionsActivity"></activity>
+        <activity
+            android:name=".call.CallActionsActivity"
+            android:parentActivityName=".MainActivity"></activity>
 
         <receiver
             android:name=".CallBroadcastReceiver"
