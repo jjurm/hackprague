@@ -12,7 +12,7 @@ public class HackyVoice implements RecognitionListener {
 
     private SpeechRecognizer speech = null;
     private Intent recognizerIntent;
-    private String LOG_TAG = "HackyVoice";
+    private static String TAG = "HackyVoice";
 
     private String text = "";
 
@@ -31,10 +31,12 @@ public class HackyVoice implements RecognitionListener {
     }
 
     public void listen() {
+        Log.i(TAG, "Listening");
         speech.startListening(recognizerIntent);
     }
 
     public void stop() {
+        Log.i(TAG, "Stopping");
         speech.stopListening();
     }
 
@@ -44,7 +46,7 @@ public class HackyVoice implements RecognitionListener {
 
     @Override
     public void onBeginningOfSpeech() {
-        Log.i(LOG_TAG, "onBeginningOfSpeech");
+        Log.i(TAG, "onBeginningOfSpeech");
     }
 
     @Override
@@ -53,41 +55,43 @@ public class HackyVoice implements RecognitionListener {
 
     @Override
     public void onEndOfSpeech() {
-        Log.i(LOG_TAG, "onEndOfSpeech");
+        Log.i(TAG, "onEndOfSpeech");
     }
 
     @Override
     public void onError(int errorCode) {
         String errorMessage = getErrorText(errorCode);
-        Log.d(LOG_TAG, "FAILED " + errorMessage);
+        Log.d(TAG, "FAILED " + errorMessage);
     }
 
     @Override
     public void onEvent(int arg0, Bundle arg1) {
-        Log.i(LOG_TAG, "onEvent");
+        Log.i(TAG, "onEvent");
     }
 
     @Override
     public void onPartialResults(Bundle arg0) {
-        Log.i(LOG_TAG, "onPartialResults");
+        Log.i(TAG, "onPartialResults");
     }
 
     @Override
     public void onReadyForSpeech(Bundle arg0) {
-        Log.i(LOG_TAG, "onReadyForSpeech");
+        Log.i(TAG, "onReadyForSpeech");
         listener.listeningEnded();
     }
 
     @Override
     public void onResults(Bundle results) {
-        Log.i(LOG_TAG, "onResults");
+        Log.i(TAG, "onResults");
         String entry = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION).get(0);
-        Log.i(LOG_TAG, entry);
+        Log.i(TAG, "T: " + entry);
         text += entry;
     }
 
     @Override
-    public void onRmsChanged(float rmsdB) { }
+    public void onRmsChanged(float rmsdB) {
+        Log.i(TAG, "dB: " + rmsdB);
+    }
 
     public static String getErrorText(int errorCode) {
         String message;
@@ -123,6 +127,7 @@ public class HackyVoice implements RecognitionListener {
                 message = "Didn't understand, please try again.";
                 break;
         }
+        Log.i(TAG, message);
         return message;
     }
 

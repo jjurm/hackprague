@@ -31,7 +31,7 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
     private static final String TAG = CallRecorderService.class.getName();
 
     private HackyVoice voice;
-    private boolean onCall = false;
+    private static boolean onCall = false;
 
     public static final String EXTRA_SERVICE_ACTION = "extra_service_action";
     public static final String EXTRA_NUMBER = "extra_number";
@@ -97,25 +97,24 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
 
     private void startRecording() { // when the call has been answered
         // use this.recordingId
-        onCall = true;
-        executor.submit(new Runnable() {
-            @Override
-            public void run() {
-                voice.listen();
-            }
-        });
+        if (!onCall) {
+            onCall = true;
+            executor.submit(new Runnable() {
+                @Override
+                public void run() {
+                    voice.listen();
+                }
+            });
+        }
     }
 
     private void stopRecording() { // on call end
         // may be called just after prepareRecording, skipping startRecording
-        executor.submit(new Runnable() {
-            @Override
-            public void run() {
-                voice.stop();
-            }
-        });
-        onCall = false;
-        finalizeCall();
+        if (onCall) {
+            voice.stop();
+            onCall = false;
+            finalizeCall();
+        }
     }
 
     private void finalizeCall() {
