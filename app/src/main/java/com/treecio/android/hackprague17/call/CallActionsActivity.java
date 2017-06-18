@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +20,8 @@ public class CallActionsActivity extends Activity {
 
     private StoragePort storagePort;
     private Call call;
+
+    final String TAG = "CallActionActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,9 @@ public class CallActionsActivity extends Activity {
         storagePort = new StoragePort(this);
         call = storagePort.getData().getCall(id);
 
+        Log.i(TAG, Integer.toString(id));
+
+
         //add fields
         TextView callerName = (TextView) findViewById(R.id.callerName);
         callerName.setText(call.getCallerName());
@@ -53,7 +59,6 @@ public class CallActionsActivity extends Activity {
         //add adapter
         CallActionsAdapter adapter = new CallActionsAdapter(call);
         rv.setAdapter(adapter);
-
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }

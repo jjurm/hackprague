@@ -18,7 +18,9 @@ import ai.api.model.Result;
 import ai.api.model.Status;
 
 import com.treecio.android.hackprague17.HackyItem.HackyFactory;
+import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.model.CallAction;
+import com.treecio.android.hackprague17.storage.StoragePort;
 
 import org.w3c.dom.Text;
 
@@ -44,6 +46,10 @@ public class HackyListener implements AIListener {
     final HackyFactory factory = new HackyFactory();
 
     List<CallAction> actions = new ArrayList<>();
+
+    static StoragePort storage;
+
+    static Call call;
 
     protected void processSentence(String t) throws ExecutionException, InterruptedException {
 
@@ -71,19 +77,20 @@ public class HackyListener implements AIListener {
     }
 
 
-    public List<CallAction> process(List<String> data) throws ExecutionException, InterruptedException {
+    public void process(List<String> data, StoragePort store, Call c) throws ExecutionException, InterruptedException {
 
         actions.clear();
+
+        call = c;
+
+        storage = store;
 
         Log.i(TAG, "Processing data");
 
         for (String t: data) {
             processSentence(t);
         }
-
-        Log.i(TAG, "Data processed");
-
-        return actions;
+        Log.i(TAG, "Processed size: " + Integer.toString(actions.size()));
     }
 
     /**
@@ -100,7 +107,8 @@ public class HackyListener implements AIListener {
         //get resolved query
         final Result result = response.getResult();
 
-        actions.add(factory.create(result));
+        call.getCallActions().add(factory.create(result));
+        storage.saveData();
     }
 
     @Override
