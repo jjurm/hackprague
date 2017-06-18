@@ -92,6 +92,7 @@ public class MainActivity extends FragmentActivity {
         RemindAction ra = new RemindAction();
         ra.setTitle("Reminder");
         ra.setDescription("Buy potatoes tomorrow");
+        l.add(ra);
 
         call = Call.createCall(this, d.obtainNextCallIndex(), "+421910420214", cal.getTime(), l);
         d.getCalls().put(call.getId(), call);
