@@ -1,8 +1,8 @@
 package com.treecio.android.hackprague17.model;
 
 
-import android.os.Bundle;
 import android.app.Fragment;
+import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,12 +21,6 @@ public class CardsFragment extends Fragment {
     public CardsFragment() {
         // Required empty public constructor
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

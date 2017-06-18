@@ -38,12 +38,6 @@ public class CallAction {
 
     protected Date date;
 
-    public Date getDate() {
-        return date;
-    }
-
-    public String getTitle() { return title; }
-
     public String getContactName() { return contactname; }
 
     public String getContactinfo() { return contactinfo; }
@@ -54,8 +48,15 @@ public class CallAction {
 
     public HashMap<String, String> getParameters() { return parameters; }
 
+    public String getTitle() {
+        return title;
+    }
 
-    public enum CallActionType {
+    public Date getDate() {
+        return date;
+    }
+
+    public static enum CallActionType {
         Remind,
         Meet,
         Address,

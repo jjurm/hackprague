@@ -7,10 +7,13 @@
     tools:context="com.treecio.android.hackprague17.call.CallActionsActivity">
 
     <RelativeLayout
-        android:layout_width="368dp"
-        android:layout_height="495dp"
-        tools:layout_editor_absoluteY="8dp"
-        tools:layout_editor_absoluteX="8dp">
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.0">
 
 
         <ImageView
@@ -19,6 +22,8 @@
             android:layout_height="96dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             />
 
         <TextView
@@ -30,7 +35,8 @@
             android:layout_toEndOf="@+id/photo"
             android:text="Pavol Drotár"
             android:textColor="@android:color/black"
-            android:textSize="36sp" />
+            android:textSize="36sp"
+            android:layout_marginTop="16dp"/>
 
         <TextView
             android:id="@+id/date"
@@ -39,13 +45,15 @@
             android:layout_alignStart="@+id/callerName"
             android:layout_below="@+id/callerName"
             android:text="31/05/2017"
-            android:textSize="24sp" />
+            android:textSize="24sp"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/callActionsList"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/photo"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="16dp"/>
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

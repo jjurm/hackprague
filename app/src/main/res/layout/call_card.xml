@@ -8,11 +8,11 @@
     card_view:cardCornerRadius="2dp"
     card_view:contentPadding="4dp"
     card_view:cardElevation="2dp"
-    android:layout_margin="8dp">
+    android:layout_margin="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/photo"
@@ -26,12 +26,13 @@
             android:id="@+id/callerName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="8sp"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@+id/photo"
             android:text="Pavol Drotár"
             android:textColor="@android:color/black"
-            android:textSize="30sp"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@+id/photo"
-            android:layout_marginStart="16dp" />
+            android:textSize="20sp"/>
 
         <TextView
             android:id="@+id/date"
@@ -40,7 +41,8 @@
             android:layout_alignStart="@+id/callerName"
             android:layout_below="@+id/callerName"
             android:text="31/05/2017"
-            android:textSize="18sp" />
+            android:textSize="16sp"
+            android:layout_marginTop="4dp"/>
 
     </RelativeLayout>
 
