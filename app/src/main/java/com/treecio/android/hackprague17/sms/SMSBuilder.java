@@ -64,6 +64,11 @@ public class SMSBuilder {
         return this;
     }
 
+    public SMSBuilder addNote(String note) {
+        vCard.addNote(note);
+        return this;
+    }
+
     public String build(VCardVersion v) {
         return Ezvcard.write(vCard).version(v).go();
     }

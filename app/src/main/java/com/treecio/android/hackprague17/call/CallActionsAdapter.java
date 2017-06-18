@@ -102,9 +102,10 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
 
             @Override
             public void onClick(View v) {
+                String sms;
                 switch (action.getType()) {
                     case Address:
-                        String sms = new SMSBuilder(v.getContext()).addAddress(action.getDescription()).build(VCardVersion.V4_0);
+                        sms = new SMSBuilder(v.getContext()).addAddress(action.getDescription()).build(VCardVersion.V4_0);
                         SMSBuilder.SendSMS(call.getNumber(), sms);
                         break;
                     case Meet:
@@ -113,8 +114,12 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                         ca.createSharedEvent(action.getDescription(), action.getTitle(), new Date(), new Date(), "pavol.drotar3@gmail.com");
                         break;
                     case Remind:
+                        sms = new SMSBuilder(v.getContext()).addNote(action.getDescription()).build(VCardVersion.V4_0);
+                        SMSBuilder.SendSMS(call.getNumber(), sms);
                         break;
                     case Contact:
+                        sms = new SMSBuilder(v.getContext()).addName(action.getTitle()).addPhone(action.getDescription()).build(VCardVersion.V4_0);
+                        SMSBuilder.SendSMS(call.getNumber(), sms);
                         break;
                 }
             }
