@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="142dp">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/actionIcon"
@@ -30,10 +30,9 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@+id/actionIcon"
-            android:text="Meeting in the Town Hall tomorrow at 5PM"
+            android:text="Meeting in the Town Hall"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="18sp"
-            />
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/actionDescription"
@@ -44,8 +43,8 @@
             android:text="Meeting in the Town Hall tomorrow at 5PM"
             android:textColor="@color/cardview_dark_background"
             android:textSize="12sp"
-            android:layout_below="@+id/actionIcon"
-            android:layout_toEndOf="@+id/actionIcon" />
+            android:layout_toEndOf="@+id/actionIcon"
+            android:layout_below="@+id/actionText" />
 
         <Button
             android:id="@+id/actionOpenButton"
