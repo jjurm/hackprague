@@ -133,12 +133,15 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
         Log.i(TAG, "Getting actions");
 
         List<CallAction> actions = new ArrayList<>();
+
+        Call call = Call.createCall(getApplicationContext(), recordingId, number, date, actions);
+
         if (recordingId == 4) {
             // mocking
 
         } else {
             try {
-                actions = listie.process(voice.getData());
+                listie.process(voice.getData(), storagePort, call);
             } catch (ExecutionException e) {
                 Log.e(TAG, e.getMessage(), e);
             } catch (InterruptedException e) {
@@ -146,13 +149,10 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
             }
         }
 
-        Call call = Call.createCall(getApplicationContext(), recordingId, number, date, actions);
-
         storagePort.getData().getCalls().put(call.getId(), call);
         storagePort.saveData();
 
         new NotificationBuilder(getApplicationContext()).createNotification(call);
-
     }
 
 }

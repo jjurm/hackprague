@@ -1,5 +1,7 @@
 package com.treecio.android.hackprague17.HackyItem;
 
+import android.util.Log;
+
 import com.treecio.android.hackprague17.model.CallAction;
 
 
@@ -10,6 +12,9 @@ import ai.api.model.Result;
  */
 
 public class TheaterAction extends CallAction {
+
+    final String TAGGG = "TheaterAction";
+
 
     public TheaterAction (Result result) {
         super(result);
@@ -28,6 +33,19 @@ public class TheaterAction extends CallAction {
     protected void getTipForToday() {
         description = "Love in Idleness\nApollo Theatre\n";
         description += "https://www.londontheatredirect.com/play/2681/love-in-idleness-tickets.aspx";
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                GetShows s = new GetShows();
+                try {
+                    description = s.get();
+                    Log.i(TAGGG, description);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
 
     }
 }
