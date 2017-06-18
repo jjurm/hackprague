@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.JsonElement;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,10 @@ public class CallAction {
 
     protected String query;
 
+    protected String title;
+
+    protected Date date;
+
     protected HashMap<String, String> parameters;
 
     public CallActionType getType() { return type; }
@@ -32,11 +37,19 @@ public class CallAction {
 
     public HashMap<String, String> getParameters() { return parameters; }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
     public static enum CallActionType {
         Remind,
         Meet,
         Address,
-        Log
+        Contact
     }
 
     protected CallAction(Result result) {
