@@ -60,7 +60,7 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                 break;
         }
 
-        holder.actionText.setText(action.getDescription());
+        holder.actionText.setText(action.getTitle());
 
         holder.actionOpenButton.setOnClickListener(new View.OnClickListener(){
 
