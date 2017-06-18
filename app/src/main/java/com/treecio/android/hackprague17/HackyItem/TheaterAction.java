@@ -14,7 +14,8 @@ public class TheaterAction extends CallAction {
         super(result);
         type = CallActionType.Tip;
 
-        description = "Tip for today";
+        title = "Tip for today";
+        getTipForToday();
     }
 
     public TheaterAction() {
@@ -23,4 +24,7 @@ public class TheaterAction extends CallAction {
         description = "Romeo and Juliet in Theater";
     }
 
+    protected void getTipForToday() {
+        description = "Very cool recommendation";
+    }
 }
