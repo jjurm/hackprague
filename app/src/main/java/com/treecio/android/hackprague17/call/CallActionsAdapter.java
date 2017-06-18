@@ -152,7 +152,7 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
         public CardViewHolder(View v) {
             super(v);
             actionText =  (TextView) v.findViewById(R.id.actionText);
-            actionIcon = (ImageView)  v.findViewById(R.id.photo);
+            actionIcon = (ImageView)  v.findViewById(R.id.actionIcon);
             actionCard = (CardView) v.findViewById(R.id.actionCard);
             actionOpenButton = (Button) v.findViewById(R.id.actionOpenButton);
             actionShareButton = (Button) v.findViewById(R.id.actionShareButton);
