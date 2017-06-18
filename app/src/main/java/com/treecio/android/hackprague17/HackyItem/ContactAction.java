@@ -8,13 +8,13 @@ import ai.api.model.Result;
  * Created by xcubae00 on 17.6.2017.
  */
 
-public class LogAction extends CallAction {
+public class ContactAction extends CallAction {
 
-    public LogAction (Result result) {
+    public ContactAction(Result result) {
         super(result);
-        type = CallActionType.Log;
+        type = CallActionType.Contact;
 
-        description = "Log description";
+        description = "Contact description";
 
     }
 }

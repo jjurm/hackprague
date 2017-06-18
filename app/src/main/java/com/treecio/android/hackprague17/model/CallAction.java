@@ -32,11 +32,11 @@ public class CallAction {
 
     public HashMap<String, String> getParameters() { return parameters; }
 
-    public static enum CallActionType {
+    public enum CallActionType {
         Remind,
         Meet,
         Address,
-        Log
+        Contact
     }
 
     protected CallAction(Result result) {
