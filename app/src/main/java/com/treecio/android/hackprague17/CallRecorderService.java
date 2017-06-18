@@ -59,16 +59,16 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
             case ACTION_PREPARE:
                 String number = intent.getStringExtra(EXTRA_NUMBER);
                 prepareRecording(number);
-                Log.d(TAG, "service prepared " + number);
+                Log.i(TAG, "service prepared " + number);
                 break;
             case ACTION_START:
                 startRecording();
-                Log.d(TAG, "service started");
+                Log.i(TAG, "service started");
                 break;
             case ACTION_STOP:
                 stopRecording();
                 stopSelf();
-                Log.d(TAG, "service stopped");
+                Log.i(TAG, "service stopped");
                 break;
         }
 

@@ -15,13 +15,13 @@ public class CallBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(CallBroadcastReceiver.class.getName(), "onReceive!");
+        Log.i(CallBroadcastReceiver.class.getName(), "onReceive!");
         Bundle bundle = intent.getExtras();
         if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
             if (bundle != null) {
                 String state = bundle.getString(TelephonyManager.EXTRA_STATE);
                 if (state == null) return;
-                Log.d(TAG, "state: " + state);
+                Log.i(TAG, "state: " + state);
                 Intent service = new Intent(context, CallRecorderService.class);
                 if (state.equals(TelephonyManager.EXTRA_STATE_RINGING)) {
                     // send number
