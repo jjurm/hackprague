@@ -52,21 +52,21 @@ public class MainActivity extends FragmentActivity {
         Call call;
 
         cal = Calendar.getInstance();
-        cal.set(2017, 6, 18, 11, 21);
+        cal.set(2017, 5, 18, 11, 21);
         l = new ArrayList<>();
         l.add(new MeetAction());
         call = Call.createCall(this, d.obtainNextCallIndex(), "+421908822644", cal.getTime(), l);
         d.getCalls().put(call.getId(), call);
 
         cal = Calendar.getInstance();
-        cal.set(2017, 6, 18, 11, 48);
+        cal.set(2017, 5, 18, 11, 48);
         l = new ArrayList<>();
         l.add(new MeetAction());
         call = Call.createCall(this, d.obtainNextCallIndex(), "+421948117728", cal.getTime(), l);
         d.getCalls().put(call.getId(), call);
 
         cal = Calendar.getInstance();
-        cal.set(2017, 6, 18, 12, 39);
+        cal.set(2017, 5, 18, 12, 39);
         l = new ArrayList<>();
         l.add(new MeetAction());
         call = Call.createCall(this, d.obtainNextCallIndex(), "+421910420214", cal.getTime(), l);
