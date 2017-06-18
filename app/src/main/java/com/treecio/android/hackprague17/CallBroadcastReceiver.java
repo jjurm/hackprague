@@ -6,16 +6,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.widget.Toast;
 
 public class CallBroadcastReceiver extends BroadcastReceiver {
 
     private static final String TAG = CallBroadcastReceiver.class.getName();
 
-    private static final String ACTION_OUT = "android.intent.action.NEW_OUTGOING_CALL";
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(CallBroadcastReceiver.class.getName(), "onReceive!");
+        Log.i(CallBroadcastReceiver.class.getName(), "onReceive! " + intent.getAction());
         Bundle bundle = intent.getExtras();
         if (intent.getAction().equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
             if (bundle != null) {
@@ -35,6 +34,15 @@ public class CallBroadcastReceiver extends BroadcastReceiver {
                     // stop service
                     service.putExtra(CallRecorderService.EXTRA_SERVICE_ACTION, CallRecorderService.ACTION_STOP);
                 }
+                context.startService(service);
+            }
+        } else if (intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
+            Log.i(TAG, "HEREHERE");
+            if (bundle != null) {
+                Intent service = new Intent(context, CallRecorderService.class);
+                service.putExtra(CallRecorderService.EXTRA_SERVICE_ACTION, CallRecorderService.ACTION_PREPARE);
+                String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
+                service.putExtra(CallRecorderService.EXTRA_NUMBER, number);
                 context.startService(service);
             }
         }

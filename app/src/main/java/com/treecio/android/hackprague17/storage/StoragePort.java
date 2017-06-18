@@ -2,8 +2,19 @@ package com.treecio.android.hackprague17.storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
+
+import java.lang.reflect.Type;
 
 /**
  * Provides access to application's storage. Use this to load {@link StoredData}.
@@ -15,26 +26,26 @@ public class StoragePort {
     private static String KEY_DATA = "stored_data";
 
     private Context mContext;
-    private Gson mGson;
 
     private StoredData storedData;
 
     public StoragePort(Context context) {
         this.mContext = context;
-        this.mGson = new Gson();
     }
 
     public void loadData() {
+        Gson gson = new GsonBuilder().registerTypeAdapter(Uri.class, new UriDeserializer()).create();
         String json = getPrefs().getString(KEY_DATA, null);
         if (json != null) {
-            storedData = mGson.fromJson(json, StoredData.class);
+            storedData = gson.fromJson(json, StoredData.class);
         } else {
             storedData = StoredData.newEmptyStoredData();
         }
     }
 
     public void saveData() {
-        String json = mGson.toJson(storedData);
+        Gson gson = new GsonBuilder().registerTypeAdapter(Uri.class, new UriSerializer()).create();
+        String json = gson.toJson(storedData);
         getPrefs().edit().putString(KEY_DATA, json).apply();
     }
 
@@ -47,6 +58,20 @@ public class StoragePort {
             loadData();
         }
         return storedData;
+    }
+
+    public class UriSerializer implements JsonSerializer<Uri> {
+        public JsonElement serialize(Uri src, Type typeOfSrc, JsonSerializationContext context) {
+            return new JsonPrimitive(src.toString());
+        }
+    }
+
+    public class UriDeserializer implements JsonDeserializer<Uri> {
+        @Override
+        public Uri deserialize(final JsonElement src, final Type srcType,
+                               final JsonDeserializationContext context) throws JsonParseException {
+            return Uri.parse(src.getAsString());
+        }
     }
 
 }
