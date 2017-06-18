@@ -14,7 +14,16 @@ public class ContactAction extends CallAction {
         super(result);
         type = CallActionType.Contact;
 
-        description = "Contact description";
+        title = contactname;
 
+        //TODO
+        description = "00421910420214";
+    }
+
+    //MOCK constructor
+    public ContactAction() {
+        type = CallActionType.Contact;
+        title = "John Black";
+        description = "john.black@gmail.com";
     }
 }

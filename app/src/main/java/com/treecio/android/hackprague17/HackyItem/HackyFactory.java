@@ -27,8 +27,10 @@ public class HackyFactory {
                 return new RemindAction(result);
             case "Address":
                 return new AddressAction(result);
-            case "Log":
+            case "Contact":
                 return new ContactAction(result);
+            case "Hangout":
+                return new TheaterAction(result);
         }
 
         return null;

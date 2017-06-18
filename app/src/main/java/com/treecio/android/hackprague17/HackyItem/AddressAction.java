@@ -14,6 +14,14 @@ public class AddressAction extends CallAction {
         super(result);
         type = CallActionType.Address;
 
-        description = "Address description";
+        title = "Address";
+        description = location;
+    }
+
+    //MOCK constructor
+    public AddressAction() {
+        type = CallActionType.Address;
+        title = "Address";
+        description = "K10 Coworking Prague";
     }
 }

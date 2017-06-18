@@ -15,7 +15,12 @@ public class MeetAction extends CallAction {
         type = CallActionType.Meet;
 
         description = "Meet description";
+    }
 
+    public MeetAction() {
+        type = CallActionType.Meet;
+        title = "Meeting with Sue Brown";
+        description = "10:00 - 11:00, Green Cat Restaurant";
     }
 
 }

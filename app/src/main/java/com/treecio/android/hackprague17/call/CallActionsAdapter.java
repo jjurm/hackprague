@@ -47,7 +47,7 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
             case Remind:
                 holder.actionIcon.setImageResource(R.drawable.ic_notifications_black_24dp);
                 break;
-            case Log:
+            case Contact:
                 holder.actionIcon.setImageResource(R.drawable.ic_format_list_bulleted_black_24dp);
                 break;
         }
@@ -65,7 +65,7 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                         break;
                     case Remind:
                         break;
-                    case Log:
+                    case Contact:
                         break;
                 }
             }
@@ -82,7 +82,7 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                         break;
                     case Remind:
                         break;
-                    case Log:
+                    case Contact:
                         break;
                 }
             }

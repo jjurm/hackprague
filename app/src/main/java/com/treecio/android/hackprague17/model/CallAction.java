@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.google.gson.JsonElement;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,17 +27,41 @@ public class CallAction {
 
     protected HashMap<String, String> parameters;
 
+    protected String title;
+
+    protected String location;
+
+    protected String contactname;
+
+    protected Date date;
+
+    public Date getDate() {
+        return date;
+    }
+
+    public String getTitle() { return title; }
+
+    public String getContactName() { return contactname; }
+
     public CallActionType getType() { return type; }
 
     public String getDescription() { return description; }
 
     public HashMap<String, String> getParameters() { return parameters; }
 
+
     public enum CallActionType {
         Remind,
         Meet,
         Address,
-        Contact
+        Contact,
+        Tip
+    }
+
+    //mock constructor
+    protected CallAction() {
+        query = "mock";
+        date = new Date();
     }
 
     protected CallAction(Result result) {
@@ -58,5 +83,26 @@ public class CallAction {
             }
         }
 
+        parseLocation();
+        parseDate();
+        parseContact();
+    }
+
+    protected void parseLocation() {
+        //TODO
+        location = parameters.get("Location");
+        if (location == null) {
+            location = "Unknown";
+        }
+    }
+
+    protected void parseDate() {
+        //TODO
+        date = new Date();
+    }
+
+    protected void parseContact() {
+        //TODO
+        contactname = "Joe Black";
     }
 }
