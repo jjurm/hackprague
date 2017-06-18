@@ -19,6 +19,7 @@ import com.treecio.android.hackprague17.storage.StoragePort;
 import com.treecio.android.hackprague17.storage.StoredData;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -39,36 +40,34 @@ public class MainActivity extends FragmentActivity {
 
     public void loadFakeData() {
         StoredData d = storagePort.getData();
+        if (d.getLastUsedIndex() != 0) {
+            //return;
+            d.getCalls().clear();
+            d.setNextIndex(1);
+            storagePort.saveData();
+        }
 
-        Uri uri = Uri.parse("android.resource://com.treecio.android.hackprague17/drawable/ic_group_black_24dp");
+        List<CallAction> l;
+        Calendar cal;
 
-        List<CallAction> l = new ArrayList<>();
+        cal = Calendar.getInstance();
+        cal.set(2017, 6, 18, 11, 21);
+        l = new ArrayList<>();
         l.add(new MeetAction());
-        l.add(new AddressAction());
-        l.add(new ContactAction());
-        l.add(new RemindAction());
+        Call.addCall(this, d.obtainNextCallIndex(), "+421908822644", cal.getTime(), l);
 
-        int id = d.obtainNextCallIndex();
-        Call c = new Call(id, "Pavol Drotár", uri, new Date());
-        c.setCallActions(l);
-        d.getCalls().put(id, c);
+        cal = Calendar.getInstance();
+        cal.set(2017, 6, 18, 11, 48);
+        l = new ArrayList<>();
+        l.add(new MeetAction());
+        Call.addCall(this, d.obtainNextCallIndex(), "+421948117728", cal.getTime(), l);
 
-        id = d.obtainNextCallIndex();
-        c = new Call(id, "Juraj Mičko", uri, new Date());
-        c.setCallActions(l);
-        d.getCalls().put(id, c);
+        cal = Calendar.getInstance();
+        cal.set(2017, 6, 18, 12, 39);
+        l = new ArrayList<>();
+        l.add(new MeetAction());
+        Call.addCall(this, d.obtainNextCallIndex(), "+421910420214", cal.getTime(), l);
 
-        id = d.obtainNextCallIndex();
-        c = new Call(id, "Michal Pándy", uri, new Date());
-        c.setCallActions(l);
-        d.getCalls().put(id, c);
-
-        id = d.obtainNextCallIndex();
-        c = new Call(id, "Eduard Čuba", uri, new Date());
-        c.setCallActions(l);
-        d.getCalls().put(id, c);
-
-        storagePort.saveData();
     }
 
     @Override

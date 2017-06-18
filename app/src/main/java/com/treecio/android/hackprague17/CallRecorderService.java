@@ -2,22 +2,20 @@ package com.treecio.android.hackprague17;
 
 import android.app.Service;
 import android.content.Intent;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.IBinder;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.treecio.android.hackprague17.model.Call;
+import com.treecio.android.hackprague17.model.CallAction;
 import com.treecio.android.hackprague17.storage.NotificationBuilder;
 import com.treecio.android.hackprague17.storage.StoragePort;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-
-import java.util.Date;
 
 public class CallRecorderService extends Service implements ServiceNotifiesListener {
 
@@ -132,67 +130,26 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
     private void finalizeCall() {
 
         Log.i(TAG, "Finalizing");
+        Log.i(TAG, "Getting actions");
 
+        List<CallAction> actions = new ArrayList<>();
+        if (recordingId == 4) {
+            // mocking
 
-        Call call = new Call(recordingId);
-        call.setDate(date);
-
-        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-        try (Cursor cur = getContentResolver().query(uri,
-                new String[]{
-                        ContactsContract.PhoneLookup.LOOKUP_KEY,
-                        ContactsContract.PhoneLookup.DISPLAY_NAME,
-                        ContactsContract.PhoneLookup.NORMALIZED_NUMBER,
-                        ContactsContract.PhoneLookup.PHOTO_URI,
-                }, null, null, null)) {
-
-            if (cur.moveToNext()) { // take first contact match
-                String contactLookupKey = cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.LOOKUP_KEY));
-                String name = cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
-                Log.d(TAG, name);
-                call.setCallerName(name);
-                Log.d(TAG, cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.NORMALIZED_NUMBER)));
-                String photoUri = cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.PHOTO_URI));
-                if (photoUri != null) {
-                    Log.d(TAG, photoUri);
-                    call.setPhoto(Uri.parse(photoUri));
-                }
-
-                try (Cursor emailCur = getContentResolver().query(
-                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,
-                        new String[]{
-                                ContactsContract.CommonDataKinds.Email.ADDRESS,
-                        },
-                        ContactsContract.CommonDataKinds.Email.LOOKUP_KEY + "=?",
-                        new String[]{contactLookupKey}, null)) {
-                    if (emailCur.moveToNext()) { // take first email match
-                        String email = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
-                        Log.d(TAG, email);
-                        call.setEmail(email);
-                    }
-                }
-
+        } else {
+            try {
+                actions = listie.process(voice.getData());
+            } catch (ExecutionException e) {
+                Log.e(TAG, e.getMessage(), e);
+            } catch (InterruptedException e) {
+                Log.e(TAG, e.getMessage(), e);
             }
         }
 
-        //get call actions
+        Call call = Call.addCall(getApplicationContext(), recordingId, number, date, actions);
 
-        Log.i(TAG, "Getting actions");
+        new NotificationBuilder(getApplicationContext()).createNotification(call);
 
-        try {
-            call.setCallActions(listie.process(voice.getData()));
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // notif
-
-        storagePort.getData().getCalls().put(call.getId(), call);
-        storagePort.saveData();
-
-        new NotificationBuilder(getBaseContext()).createNotification(call);
     }
 
 }
