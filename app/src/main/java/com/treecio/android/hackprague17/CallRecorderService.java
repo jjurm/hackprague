@@ -140,7 +140,7 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
         if (recordingId == 4) {
             // mocking
             MeetAction meetAction = new MeetAction();
-            meetAction.setDescription("Meet in Hyde Park 6PM.");
+            meetAction.setDescription("Meet in Hyde Park at 6PM.");
             meetAction.setTitle("Meeting");
             actions.add(meetAction);
 
