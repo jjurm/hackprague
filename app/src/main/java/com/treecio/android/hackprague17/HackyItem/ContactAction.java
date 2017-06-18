@@ -15,8 +15,6 @@ public class ContactAction extends CallAction {
         type = CallActionType.Contact;
 
         title = contactname;
-
-        //TODO
         description = "00421910420214";
     }
 
