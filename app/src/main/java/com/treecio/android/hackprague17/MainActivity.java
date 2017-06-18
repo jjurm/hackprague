@@ -75,7 +75,6 @@ public class MainActivity extends FragmentActivity {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         transaction.replace(R.id.cardsFragment, n);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
