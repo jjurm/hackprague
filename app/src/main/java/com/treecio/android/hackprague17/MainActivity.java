@@ -49,9 +49,7 @@ public class MainActivity extends FragmentActivity {
         StoredData d = storagePort.getData();
         if (d.getLastUsedIndex() != 0) {
             return;
-            /*d.getCalls().clear();
-            d.setNextIndex(1);
-            storagePort.saveData();*/
+
         }
 
         List<CallAction> l;
@@ -110,14 +108,15 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.refresh:
-                refresh();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
+        return false;
+    }
+
+    private void reset() {
+        StoredData d = storagePort.getData();
+        d.getCalls().clear();
+        d.setNextIndex(1);
+        storagePort.saveData();
+        loadFakeData();
     }
 
     public void refresh() {

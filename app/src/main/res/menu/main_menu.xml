@@ -7,4 +7,9 @@
         android:title="Refresh"
         app:showAsAction="ifRoom"
         android:icon="@drawable/ic_refresh_black_24dp"/>
+
+    <item
+        android:id="@+id/reset"
+        android:title="Reset"
+        app:showAsAction="never" />
 </menu>
