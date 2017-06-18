@@ -70,7 +70,7 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
 
 
 
-                        ca.createPersonalEvent(action.getDescription(), action.getTitle(),action.getDate(), action.getDate().);
+                        //ca.createPersonalEvent(action.getDescription(), action.getTitle(),action.getDate(), action.getDate().);
                         break;
                     case Remind:
                         break;

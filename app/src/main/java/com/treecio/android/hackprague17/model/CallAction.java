@@ -25,10 +25,6 @@ public class CallAction {
 
     protected String query;
 
-    protected String title;
-
-    protected Date date;
-
     protected HashMap<String, String> parameters;
 
     protected String title;
@@ -38,12 +34,6 @@ public class CallAction {
     protected String contactname;
 
     protected Date date;
-
-    public Date getDate() {
-        return date;
-    }
-
-    public String getTitle() { return title; }
 
     public String getContactName() { return contactname; }
 
