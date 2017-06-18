@@ -6,10 +6,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by JJurM on 17/06/2017.
- */
-
 public class Call {
 
     int id;

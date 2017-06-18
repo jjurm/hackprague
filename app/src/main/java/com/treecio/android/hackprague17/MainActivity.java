@@ -1,7 +1,5 @@
 package com.treecio.android.hackprague17;
 
-import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.treecio.android.hackprague17.model.Call;
-import com.treecio.android.hackprague17.model.CardsAdapter;
 import com.treecio.android.hackprague17.model.CardsFragment;
 import com.treecio.android.hackprague17.storage.StoragePort;
 import com.treecio.android.hackprague17.storage.StoredData;
@@ -26,6 +23,8 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        storagePort = new StoragePort(this);
 
         loadFakeData();
         refresh();
