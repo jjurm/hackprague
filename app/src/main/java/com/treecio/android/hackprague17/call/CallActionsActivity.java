@@ -30,7 +30,7 @@ public class CallActionsActivity extends Activity {
 
         //get intent
         Intent intent = getIntent();
-        int id = Integer.parseInt(intent.getExtras().getString("id"));
+        int id = intent.getExtras().getInt("id");
 
         //retrieve call by id from intent
         storagePort = new StoragePort(this);
