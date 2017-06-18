@@ -8,6 +8,7 @@ import android.os.IBinder;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.storage.StoragePort;
 
 public class CallRecorderService extends Service {
@@ -85,22 +86,40 @@ public class CallRecorderService extends Service {
     }
 
     private void finalizeCall() {
-        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
-        String[] projection = new String[]{
-                ContactsContract.PhoneLookup.DISPLAY_NAME,
-                ContactsContract.PhoneLookup.NORMALIZED_NUMBER,
-                ContactsContract.PhoneLookup.PHOTO_URI,
-        };
-        try (Cursor cur = getContentResolver().query(uri,
-                projection, null, null, null)) {
 
-            while (cur.moveToNext()) {
+        Call call = new Call(recordingId);
+
+        Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
+        try (Cursor cur = getContentResolver().query(uri,
+                new String[]{
+                        ContactsContract.PhoneLookup.LOOKUP_KEY,
+                        ContactsContract.PhoneLookup.DISPLAY_NAME,
+                        ContactsContract.PhoneLookup.NORMALIZED_NUMBER,
+                        ContactsContract.PhoneLookup.PHOTO_URI,
+                }, null, null, null)) {
+
+            if (cur.moveToNext()) { // take first contact match
+                String contactLookupKey = cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.LOOKUP_KEY));
                 Log.d(TAG, cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)));
                 Log.d(TAG, cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.NORMALIZED_NUMBER)));
                 String photoUri = cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.PHOTO_URI));
                 if (photoUri != null) {
                     Log.d(TAG, photoUri);
                 }
+
+                try (Cursor emailCur = getContentResolver().query(
+                        ContactsContract.CommonDataKinds.Email.CONTENT_URI,
+                        new String[]{
+                                ContactsContract.CommonDataKinds.Email.ADDRESS,
+                        },
+                        ContactsContract.CommonDataKinds.Email.LOOKUP_KEY + "=?",
+                        new String[]{contactLookupKey}, null)) {
+                    if (emailCur.moveToNext()) { // take first email match
+                        String email = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
+                        Log.d(TAG, email);
+                    }
+                }
+
             }
 
         }
