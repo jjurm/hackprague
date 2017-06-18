@@ -25,6 +25,10 @@ public class CallAction {
 
     protected String query;
 
+    protected String title;
+
+    protected Date date;
+
     protected HashMap<String, String> parameters;
 
     protected String title;
@@ -49,8 +53,15 @@ public class CallAction {
 
     public HashMap<String, String> getParameters() { return parameters; }
 
+    public String getTitle() {
+        return title;
+    }
 
-    public enum CallActionType {
+    public Date getDate() {
+        return date;
+    }
+
+    public static enum CallActionType {
         Remind,
         Meet,
         Address,

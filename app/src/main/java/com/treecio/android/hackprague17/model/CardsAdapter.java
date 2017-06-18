@@ -76,7 +76,7 @@ public class CardsAdapter extends RecyclerView.Adapter<CardsAdapter.CardViewHold
 
         holder.callerName.setText(call.callerName);
 
-        DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        DateFormat df = new SimpleDateFormat("MM/dd/yyyy  HH:mm");
         Date d = call.date;
         holder.date.setText(df.format(d));
 
