@@ -12,11 +12,30 @@ import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.storage.NotificationBuilder;
 import com.treecio.android.hackprague17.storage.StoragePort;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
 import java.util.Date;
 
-public class CallRecorderService extends Service {
+public class CallRecorderService extends Service implements ServiceNotifiesListener {
+
+    @Override
+    public void listeningEnded() {
+        if (onCall) {
+            executor.submit(new Runnable() {
+                @Override
+                public void run() {
+                    voice.listen();
+                }
+            });
+        }
+    }
 
     private static final String TAG = CallRecorderService.class.getName();
+
+    private HackyVoice voice;
+    private static boolean onCall = false;
 
     public static final String EXTRA_SERVICE_ACTION = "extra_service_action";
     public static final String EXTRA_NUMBER = "extra_number";
@@ -24,6 +43,8 @@ public class CallRecorderService extends Service {
     public static final int ACTION_PREPARE = 0;
     public static final int ACTION_START = 1;
     public static final int ACTION_STOP = 2; // may be called without start
+
+    public ExecutorService executor = Executors.newSingleThreadExecutor();
 
     StoragePort storagePort;
     int recordingId;
@@ -43,16 +64,16 @@ public class CallRecorderService extends Service {
             case ACTION_PREPARE:
                 String number = intent.getStringExtra(EXTRA_NUMBER);
                 prepareRecording(number);
-                Log.d(TAG, "service prepared " + number);
+                Log.i(TAG, "service prepared " + number);
                 break;
             case ACTION_START:
                 startRecording();
-                Log.d(TAG, "service started");
+                Log.i(TAG, "service started");
                 break;
             case ACTION_STOP:
                 stopRecording();
                 stopSelf();
-                Log.d(TAG, "service stopped");
+                Log.i(TAG, "service stopped");
                 break;
         }
 
@@ -63,6 +84,7 @@ public class CallRecorderService extends Service {
     public void onCreate() {
         super.onCreate();
         storagePort = new StoragePort(getApplicationContext());
+        voice = new HackyVoice(getApplicationContext(), this);
     }
 
     @Override
@@ -81,14 +103,25 @@ public class CallRecorderService extends Service {
     private void startRecording() { // when the call has been answered
         // use this.recordingId
         date = new Date();
-        date.setHours(0);
 
+        if (!onCall) {
+            onCall = true;
+            executor.submit(new Runnable() {
+                @Override
+                public void run() {
+                    voice.listen();
+                }
+            });
+        }
     }
 
     private void stopRecording() { // on call end
         // may be called just after prepareRecording, skipping startRecording
-
-        finalizeCall();
+        if (onCall) {
+            voice.stop();
+            onCall = false;
+            finalizeCall();
+        }
     }
 
     private void finalizeCall() {
