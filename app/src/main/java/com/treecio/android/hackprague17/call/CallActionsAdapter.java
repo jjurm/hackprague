@@ -1,6 +1,5 @@
 package com.treecio.android.hackprague17.call;
 
-import android.icu.util.Calendar;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import com.treecio.android.hackprague17.R;
 import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.model.CallAction;
 
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -68,9 +68,12 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                     case Meet:
                         CalendarAction ca = new CalendarAction(v.getContext());
 
+                        Calendar calendar = java.util.Calendar.getInstance();
+                        calendar.setTime(action.getDate());
 
+                        calendar.add(Calendar.HOUR, 1);
 
-                        //ca.createPersonalEvent(action.getDescription(), action.getTitle(),action.getDate(), action.getDate().);
+                        ca.createPersonalEvent(action.getDescription(), action.getTitle(),action.getDate(), calendar.getTime());
                         break;
                     case Remind:
                         break;
