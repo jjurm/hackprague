@@ -44,7 +44,7 @@ public class NotificationBuilder {
                 .largeIcon(UriToBitmap(call.getPhoto()))
                 .title("Take action")
                 .message("Yo, check out the summary of your call with " + call.getCallerName() + " !")
-                .click(MainActivity.class, bundle)
+                .click(CallActionsActivity.class, bundle)
                 .vibrate(new long[]{300, 300})
                 .sound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .simple()
