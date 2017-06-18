@@ -1,6 +1,5 @@
 package com.treecio.android.hackprague17.call;
 
-import android.content.Intent;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,11 +11,6 @@ import android.widget.TextView;
 import com.treecio.android.hackprague17.R;
 import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.model.CallAction;
-import com.treecio.android.hackprague17.model.CallAction.CallActionType;
-
-import java.util.List;
-
-import static com.treecio.android.hackprague17.model.CallAction.CallActionType.*;
 
 /**
  * Created by Pali on 17.06.2017.

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 
 import com.treecio.android.hackprague17.MainActivity;
@@ -30,16 +31,19 @@ public class NotificationBuilder {
         this.context = context;
     }
 
-    public void createNotification(Call call){
+    public void createNotification(Call call) {
 
-      PugNotification.with(context)
+        Bundle bundle = new Bundle();
+        bundle.putInt("id", call.getId());
+
+        PugNotification.with(context)
                 .load()
                 .smallIcon(R.drawable.pugnotification_ic_launcher)
                 .autoCancel(false)
                 .largeIcon(UriToBitmap(call.getPhoto()))
                 .title("Take action")
                 .message("Yo, check out the summary of your call with " + call.getCallerName() + " !")
-                .click(MainActivity.class) //Pali, sem pridaj aka aktivita sa ma spustit po tom co sa stlaci notifikacia
+                .click(MainActivity.class, bundle)
                 .vibrate(new long[]{300, 300})
                 .sound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .simple()
