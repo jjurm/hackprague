@@ -30,6 +30,14 @@ public class CallAction {
 
     protected String location;
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     protected String contactname;
 
     protected String contactinfo;
@@ -53,6 +61,8 @@ public class CallAction {
     public String getDate() {
         return date;
     }
+
+    public void setContactInfo(String contactinfo) { this.contactinfo = contactinfo; }
 
     public static enum CallActionType {
         Remind,

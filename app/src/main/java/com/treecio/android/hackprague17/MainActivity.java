@@ -12,6 +12,7 @@ import com.treecio.android.hackprague17.HackyItem.AddressAction;
 import com.treecio.android.hackprague17.HackyItem.ContactAction;
 import com.treecio.android.hackprague17.HackyItem.MeetAction;
 import com.treecio.android.hackprague17.HackyItem.RemindAction;
+import com.treecio.android.hackprague17.HackyItem.TheaterAction;
 import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.model.CallAction;
 import com.treecio.android.hackprague17.model.CardsFragment;
@@ -60,13 +61,26 @@ public class MainActivity extends FragmentActivity {
         cal = Calendar.getInstance();
         cal.set(2017, 5, 18, 11, 21);
         l = new ArrayList<>();
-        l.add(new MeetAction());
+
+
+        MeetAction meetAction = new MeetAction();
+        meetAction.setDescription("Meet in park today with Pavol");
+        meetAction.setTitle("Meeting");
+        meetAction.setContactInfo("pavol.drotar3@gmail.com");
+        l.add(meetAction);
+
         call = Call.createCall(this, d.obtainNextCallIndex(), "+421908822644", cal.getTime(), l);
         d.getCalls().put(call.getId(), call);
 
         cal = Calendar.getInstance();
         cal.set(2017, 5, 18, 11, 48);
         l = new ArrayList<>();
+
+        AddressAction aa = new AddressAction();
+        aa.setTitle("Address");
+        aa.setDescription("Prague, Main Station");
+        l.add(aa);
+
         l.add(new MeetAction());
         call = Call.createCall(this, d.obtainNextCallIndex(), "+421948117728", cal.getTime(), l);
         d.getCalls().put(call.getId(), call);
@@ -74,7 +88,11 @@ public class MainActivity extends FragmentActivity {
         cal = Calendar.getInstance();
         cal.set(2017, 5, 18, 12, 39);
         l = new ArrayList<>();
-        l.add(new MeetAction());
+
+        RemindAction ra = new RemindAction();
+        ra.setTitle("Reminder");
+        ra.setDescription("Buy potatoes tomorrow");
+
         call = Call.createCall(this, d.obtainNextCallIndex(), "+421910420214", cal.getTime(), l);
         d.getCalls().put(call.getId(), call);
 

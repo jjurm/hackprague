@@ -111,7 +111,11 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                     case Meet:
                         CalendarAction ca = new CalendarAction(v.getContext());
 
-                        ca.createSharedEvent(action.getDescription(), action.getTitle(), new Date(), new Date(), "pavol.drotar3@gmail.com");
+                        if(call.getId() == 4) {
+                            ca.createSharedEvent(action.getDescription(), action.getTitle(), new Date(), new Date(), action.getContactinfo());
+                        } else {
+                            ca.createSharedEvent(action.getDescription(), action.getTitle(), new Date(), new Date(), "pavol.drotar3@gmail.com");
+                        }
                         break;
                     case Remind:
                         sms = new SMSBuilder(v.getContext()).addNote(action.getDescription()).build(VCardVersion.V4_0);
