@@ -1,5 +1,7 @@
 package com.treecio.android.hackprague17.call;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -64,6 +66,14 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
             public void onClick(View v) {
                 switch (action.getType()) {
                     case Address:
+                        String strUri = "geo:0,0?q=" + action.getDescription();
+                        Uri uri = Uri.parse(strUri);
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(uri);
+                        if (intent.resolveActivity(v.getContext().getPackageManager()) != null) {
+                            v.getContext().startActivity(intent);
+                        }
                         break;
                     case Meet:
                         CalendarAction ca = new CalendarAction(v.getContext());
@@ -76,8 +86,21 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                         ca.createPersonalEvent(action.getDescription(), action.getTitle(),action.getDate(), calendar.getTime());
                         break;
                     case Remind:
+                        CalendarAction c = new CalendarAction(v.getContext());
+
+                        Calendar cal = java.util.Calendar.getInstance();
+                        cal.setTime(action.getDate());
+
+                        cal.add(Calendar.HOUR, 1);
+
+                        c.createPersonalEvent(action.getDescription(), action.getTitle(), action.getDate(), cal.getTime());
+
                         break;
                     case Contact:
+                        Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(action.getTitle()));
+                        if (i.resolveActivity(v.getContext().getPackageManager()) != null) {
+                            v.getContext().startActivity(i);
+                        }
                         break;
                 }
             }
