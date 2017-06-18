@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -39,12 +40,12 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
     @Override
     public void onBindViewHolder(CardViewHolder holder, int position) {
 
-        CallAction action = call.getCallActions().get(position);
+        final CallAction action = call.getCallActions().get(position);
 
 
         switch (action.getType()) {
             case Address:
-                    holder.actionIcon.setImageResource(R.drawable.ic_place_black_24dp);
+                holder.actionIcon.setImageResource(R.drawable.ic_place_black_24dp);
                 break;
             case Meet:
                 holder.actionIcon.setImageResource(R.drawable.ic_group_black_24dp);
@@ -59,11 +60,37 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
 
         holder.actionText.setText(action.getDescription());
 
-        holder.actionCard.setOnClickListener(new View.OnClickListener () {
+        holder.actionOpenButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View v) {
-                //TODO send to app
+                switch (action.getType()) {
+                    case Address:
+                        break;
+                    case Meet:
+                        break;
+                    case Remind:
+                        break;
+                    case Log:
+                        break;
+                }
+            }
+        });
+
+        holder.actionShareButton.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                switch (action.getType()) {
+                    case Address:
+                        break;
+                    case Meet:
+                        break;
+                    case Remind:
+                        break;
+                    case Log:
+                        break;
+                }
             }
         });
     }
@@ -77,12 +104,16 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
         protected TextView actionText;
         protected ImageView actionIcon;
         protected CardView actionCard;
+        protected Button actionOpenButton;
+        protected Button actionShareButton;
 
         public CardViewHolder(View v) {
             super(v);
             actionText =  (TextView) v.findViewById(R.id.actionText);
             actionIcon = (ImageView)  v.findViewById(R.id.photo);
             actionCard = (CardView) v.findViewById(R.id.actionCard);
+            actionOpenButton = (Button) v.findViewById(R.id.actionOpenButton);
+            actionShareButton = (Button) v.findViewById(R.id.actionShareButton);
         }
     }
 }
