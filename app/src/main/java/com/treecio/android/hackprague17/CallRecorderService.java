@@ -11,6 +11,8 @@ import android.util.Log;
 import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.storage.StoragePort;
 
+import java.util.Date;
+
 public class CallRecorderService extends Service {
 
     private static final String TAG = CallRecorderService.class.getName();
@@ -25,6 +27,7 @@ public class CallRecorderService extends Service {
     StoragePort storagePort;
     int recordingId;
     String number;
+    Date date;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -76,6 +79,8 @@ public class CallRecorderService extends Service {
 
     private void startRecording() { // when the call has been answered
         // use this.recordingId
+        date = new Date();
+        date.setHours(0);
 
     }
 
@@ -88,6 +93,7 @@ public class CallRecorderService extends Service {
     private void finalizeCall() {
 
         Call call = new Call(recordingId);
+        call.setDate(date);
 
         Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(number));
         try (Cursor cur = getContentResolver().query(uri,
@@ -100,11 +106,14 @@ public class CallRecorderService extends Service {
 
             if (cur.moveToNext()) { // take first contact match
                 String contactLookupKey = cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.LOOKUP_KEY));
-                Log.d(TAG, cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME)));
+                String name = cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.DISPLAY_NAME));
+                Log.d(TAG, name);
+                call.setCallerName(name);
                 Log.d(TAG, cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.NORMALIZED_NUMBER)));
                 String photoUri = cur.getString(cur.getColumnIndex(ContactsContract.PhoneLookup.PHOTO_URI));
                 if (photoUri != null) {
                     Log.d(TAG, photoUri);
+                    call.setPhoto(Uri.parse(photoUri));
                 }
 
                 try (Cursor emailCur = getContentResolver().query(
@@ -117,6 +126,7 @@ public class CallRecorderService extends Service {
                     if (emailCur.moveToNext()) { // take first email match
                         String email = emailCur.getString(emailCur.getColumnIndex(ContactsContract.CommonDataKinds.Email.ADDRESS));
                         Log.d(TAG, email);
+                        call.setEmail(email);
                     }
                 }
 

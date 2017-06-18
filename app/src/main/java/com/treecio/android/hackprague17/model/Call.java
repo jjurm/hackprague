@@ -16,6 +16,10 @@ public class Call {
 
     String callerName;
 
+    String number;
+
+    String email;
+
     Uri photo;
 
     Date date;
@@ -51,5 +55,33 @@ public class Call {
 
     public int getId() {
         return id;
+    }
+
+    public void setCallerName(String callerName) {
+        this.callerName = callerName;
+    }
+
+    public void setPhoto(Uri photo) {
+        this.photo = photo;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
