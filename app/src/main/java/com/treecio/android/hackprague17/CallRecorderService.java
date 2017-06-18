@@ -146,7 +146,10 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
             }
         }
 
-        Call call = Call.addCall(getApplicationContext(), recordingId, number, date, actions);
+        Call call = Call.createCall(getApplicationContext(), recordingId, number, date, actions);
+
+        storagePort.getData().getCalls().put(call.getId(), call);
+        storagePort.saveData();
 
         new NotificationBuilder(getApplicationContext()).createNotification(call);
 

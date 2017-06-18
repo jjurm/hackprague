@@ -94,7 +94,7 @@ public class Call {
         this.email = email;
     }
 
-    public static Call addCall(Context context, int recordingId, String number, Date date, List<CallAction> actions) {
+    public static Call createCall(Context context, int recordingId, String number, Date date, List<CallAction> actions) {
 
         ContentResolver cr = context.getContentResolver();
 
@@ -140,10 +140,6 @@ public class Call {
         }
 
         call.setCallActions(actions);
-
-        StoragePort storagePort = new StoragePort(context);
-        storagePort.getData().getCalls().put(call.getId(), call);
-        storagePort.saveData();
 
         return call;
 

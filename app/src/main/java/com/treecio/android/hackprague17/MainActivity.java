@@ -49,24 +49,30 @@ public class MainActivity extends FragmentActivity {
 
         List<CallAction> l;
         Calendar cal;
+        Call call;
 
         cal = Calendar.getInstance();
         cal.set(2017, 6, 18, 11, 21);
         l = new ArrayList<>();
         l.add(new MeetAction());
-        Call.addCall(this, d.obtainNextCallIndex(), "+421908822644", cal.getTime(), l);
+        call = Call.createCall(this, d.obtainNextCallIndex(), "+421908822644", cal.getTime(), l);
+        d.getCalls().put(call.getId(), call);
 
         cal = Calendar.getInstance();
         cal.set(2017, 6, 18, 11, 48);
         l = new ArrayList<>();
         l.add(new MeetAction());
-        Call.addCall(this, d.obtainNextCallIndex(), "+421948117728", cal.getTime(), l);
+        call = Call.createCall(this, d.obtainNextCallIndex(), "+421948117728", cal.getTime(), l);
+        d.getCalls().put(call.getId(), call);
 
         cal = Calendar.getInstance();
         cal.set(2017, 6, 18, 12, 39);
         l = new ArrayList<>();
         l.add(new MeetAction());
-        Call.addCall(this, d.obtainNextCallIndex(), "+421910420214", cal.getTime(), l);
+        call = Call.createCall(this, d.obtainNextCallIndex(), "+421910420214", cal.getTime(), l);
+        d.getCalls().put(call.getId(), call);
+
+        storagePort.saveData();
 
     }
 
