@@ -1,14 +1,12 @@
 package com.treecio.android.hackprague17;
 
-import android.app.Activity;
+import android.content.Context;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TextView;
-
 
 public class HackyVoice implements RecognitionListener {
 
@@ -16,18 +14,16 @@ public class HackyVoice implements RecognitionListener {
     private Intent recognizerIntent;
     private String LOG_TAG = "HackyVoice";
 
-    private TextView rtext;
-
-    private boolean loop = false;
-
     private String text = "";
 
-    public HackyVoice(Activity parent) {
+    ServiceNotifiesListener listener;
+
+    public HackyVoice(Context parent, ServiceNotifiesListener l) {
 
         speech = SpeechRecognizer.createSpeechRecognizer(parent);
         speech.setRecognitionListener(this);
 
-        rtext = (TextView) parent.findViewById(R.id.textView1);
+        listener = l;
 
         recognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         recognizerIntent.putExtra(RecognizerIntent.EXTRA_RESULTS, true);
@@ -35,16 +31,15 @@ public class HackyVoice implements RecognitionListener {
     }
 
     public void listen() {
-        loop = true;
         speech.startListening(recognizerIntent);
+    }
+
+    public void stop() {
+        speech.stopListening();
     }
 
     public String getText() {
         return text;
-    }
-
-    public void stop() {
-        loop = false;
     }
 
     @Override
@@ -80,13 +75,15 @@ public class HackyVoice implements RecognitionListener {
     @Override
     public void onReadyForSpeech(Bundle arg0) {
         Log.i(LOG_TAG, "onReadyForSpeech");
+        listener.listeningEnded();
     }
 
     @Override
     public void onResults(Bundle results) {
         Log.i(LOG_TAG, "onResults");
-        text += results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION).get(0);
-        rtext.setText(text);
+        String entry = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION).get(0);
+        Log.i(LOG_TAG, entry);
+        text += entry;
     }
 
     @Override

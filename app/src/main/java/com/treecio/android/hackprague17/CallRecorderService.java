@@ -10,9 +10,28 @@ import android.util.Log;
 
 import com.treecio.android.hackprague17.storage.StoragePort;
 
-public class CallRecorderService extends Service {
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+
+public class CallRecorderService extends Service implements ServiceNotifiesListener {
+
+    @Override
+    public void listeningEnded() {
+        if (onCall) {
+            executor.submit(new Runnable() {
+                @Override
+                public void run() {
+                    voice.listen();
+                }
+            });
+        }
+    }
 
     private static final String TAG = CallRecorderService.class.getName();
+
+    private HackyVoice voice;
+    private boolean onCall = false;
 
     public static final String EXTRA_SERVICE_ACTION = "extra_service_action";
     public static final String EXTRA_NUMBER = "extra_number";
@@ -20,6 +39,8 @@ public class CallRecorderService extends Service {
     public static final int ACTION_PREPARE = 0;
     public static final int ACTION_START = 1;
     public static final int ACTION_STOP = 2; // may be called without start
+
+    public ExecutorService executor = Executors.newSingleThreadExecutor();
 
     StoragePort storagePort;
     int recordingId;
@@ -58,6 +79,7 @@ public class CallRecorderService extends Service {
     public void onCreate() {
         super.onCreate();
         storagePort = new StoragePort(getApplicationContext());
+        voice = new HackyVoice(getApplicationContext(), this);
     }
 
     @Override
@@ -75,12 +97,24 @@ public class CallRecorderService extends Service {
 
     private void startRecording() { // when the call has been answered
         // use this.recordingId
-
+        onCall = true;
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                voice.listen();
+            }
+        });
     }
 
     private void stopRecording() { // on call end
         // may be called just after prepareRecording, skipping startRecording
-
+        executor.submit(new Runnable() {
+            @Override
+            public void run() {
+                voice.stop();
+            }
+        });
+        onCall = false;
         finalizeCall();
     }
 
