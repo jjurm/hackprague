@@ -36,7 +36,7 @@
             />
 
         <Button
-            android:id="@+id/actionShareButton"
+            android:id="@+id/actionOpenButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/actionText"
@@ -47,12 +47,12 @@
             android:theme="@style/PrimaryFlatButton"/>
 
         <Button
-            android:id="@+id/actionOpenButton"
+            android:id="@+id/actionShareButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/actionText"
             android:layout_marginStart="33dp"
-            android:layout_toEndOf="@+id/actionShareButton"
+            android:layout_toEndOf="@+id/actionOpenButton"
             android:padding="2dp"
             android:text="Share"
             android:theme="@style/PrimaryFlatButton"/>
