@@ -15,9 +15,12 @@ import com.treecio.android.hackprague17.Calendar.CalendarAction;
 import com.treecio.android.hackprague17.R;
 import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.model.CallAction;
+import com.treecio.android.hackprague17.sms.SMSBuilder;
 
 import java.util.Calendar;
 import java.util.Date;
+
+import ezvcard.VCardVersion;
 
 /**
  * Created by Pali on 17.06.2017.
@@ -112,8 +115,18 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
             public void onClick(View v) {
                 switch (action.getType()) {
                     case Address:
+                        String sms = new SMSBuilder(v.getContext()).addAddress(action.getDescription()).build(VCardVersion.V4_0);
+                        SMSBuilder.SendSMS(call.getNumber(), sms);
                         break;
                     case Meet:
+                        CalendarAction ca = new CalendarAction(v.getContext());
+
+                        Calendar calendar = java.util.Calendar.getInstance();
+                        calendar.setTime(action.getDate());
+
+                        calendar.add(Calendar.HOUR, 1);
+
+                        ca.createSharedEvent(action.getDescription(), action.getTitle(),action.getDate(), calendar.getTime(), "pavol.drotar3@gmail.com");
                         break;
                     case Remind:
                         break;
