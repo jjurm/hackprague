@@ -3,25 +3,52 @@ package com.treecio.android.hackprague17;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.model.CardsAdapter;
 import com.treecio.android.hackprague17.model.CardsFragment;
+import com.treecio.android.hackprague17.storage.StoragePort;
+import com.treecio.android.hackprague17.storage.StoredData;
+
+import java.util.Date;
 
 public class MainActivity extends FragmentActivity {
+
+    private StoragePort storagePort;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        loadFakeData();
+        refresh();
     }
 
     public void loadFakeData() {
+        StoredData d = storagePort.getData();
 
+        Uri uri = Uri.parse("android.resource://com.treecio.android.hackprague17/drawable/ic_group_black_24dp");
+
+        int id = d.obtainNextCallIndex();
+        d.getCalls().put(id, new Call(id, "Pavol Drotár", uri, new Date()));
+
+        id = d.obtainNextCallIndex();
+        d.getCalls().put(id, new Call(id, "Juraj Mičko", uri, new Date()));
+
+        id = d.obtainNextCallIndex();
+        d.getCalls().put(id, new Call(id, "Michal Pándy", uri, new Date()));
+
+        id = d.obtainNextCallIndex();
+        d.getCalls().put(id, new Call(id, "Eduard Čuba", uri, new Date()));
+
+        storagePort.saveData();
     }
 
     @Override
