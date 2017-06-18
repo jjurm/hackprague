@@ -41,10 +41,10 @@ public class MainActivity extends FragmentActivity {
     public void loadFakeData() {
         StoredData d = storagePort.getData();
         if (d.getLastUsedIndex() != 0) {
-            //return;
-            d.getCalls().clear();
+            return;
+            /*d.getCalls().clear();
             d.setNextIndex(1);
-            storagePort.saveData();
+            storagePort.saveData();*/
         }
 
         List<CallAction> l;
