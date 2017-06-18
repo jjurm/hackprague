@@ -17,7 +17,6 @@ import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.model.CallAction;
 import com.treecio.android.hackprague17.sms.SMSBuilder;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import ezvcard.VCardVersion;
@@ -81,22 +80,12 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                     case Meet:
                         CalendarAction ca = new CalendarAction(v.getContext());
 
-                        Calendar calendar = java.util.Calendar.getInstance();
-                        calendar.setTime(action.getDate());
-
-                        calendar.add(Calendar.HOUR, 1);
-
-                        ca.createPersonalEvent(action.getDescription(), action.getTitle(),action.getDate(), calendar.getTime());
+                        ca.createPersonalEvent(action.getDescription(), action.getTitle(), new Date(), new Date());
                         break;
                     case Remind:
                         CalendarAction c = new CalendarAction(v.getContext());
 
-                        Calendar cal = java.util.Calendar.getInstance();
-                        cal.setTime(action.getDate());
-
-                        cal.add(Calendar.HOUR, 1);
-
-                        c.createPersonalEvent(action.getDescription(), action.getTitle(), action.getDate(), cal.getTime());
+                        c.createPersonalEvent(action.getDescription(), action.getTitle(), new Date(), new Date());
 
                         break;
                     case Contact:
@@ -121,12 +110,7 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                     case Meet:
                         CalendarAction ca = new CalendarAction(v.getContext());
 
-                        Calendar calendar = java.util.Calendar.getInstance();
-                        calendar.setTime(action.getDate());
-
-                        calendar.add(Calendar.HOUR, 1);
-
-                        ca.createSharedEvent(action.getDescription(), action.getTitle(),action.getDate(), calendar.getTime(), "pavol.drotar3@gmail.com");
+                        ca.createSharedEvent(action.getDescription(), action.getTitle(), new Date(), new Date(), "pavol.drotar3@gmail.com");
                         break;
                     case Remind:
                         break;

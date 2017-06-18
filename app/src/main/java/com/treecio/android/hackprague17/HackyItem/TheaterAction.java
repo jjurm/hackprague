@@ -2,6 +2,7 @@ package com.treecio.android.hackprague17.HackyItem;
 
 import com.treecio.android.hackprague17.model.CallAction;
 
+
 import ai.api.model.Result;
 
 /**
@@ -25,6 +26,8 @@ public class TheaterAction extends CallAction {
     }
 
     protected void getTipForToday() {
-        description = "Very cool recommendation";
+        description = "Love in Idleness\nApollo Theatre\n";
+        description += "https://www.londontheatredirect.com/play/2681/love-in-idleness-tickets.aspx";
+
     }
 }

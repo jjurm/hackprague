@@ -4,8 +4,6 @@ import android.util.Log;
 
 import com.google.gson.JsonElement;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +24,7 @@ public class CallAction {
 
     protected String query;
 
-    protected HashMap<String, String> parameters;
+    protected HashMap<String, String> parameters = new HashMap<>();
 
     protected String title;
 
@@ -36,7 +34,7 @@ public class CallAction {
 
     protected String contactinfo;
 
-    protected Date date;
+    protected String date;
 
     public String getContactName() { return contactname; }
 
@@ -52,7 +50,7 @@ public class CallAction {
         return title;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -67,7 +65,7 @@ public class CallAction {
     //mock constructor
     protected CallAction() {
         query = "mock";
-        date = new Date();
+        date = "today";
     }
 
     protected CallAction(Result result) {
@@ -102,52 +100,10 @@ public class CallAction {
     }
 
     protected void parseDate() {
-        String d = parameters.get("TimeDate");
-        if (d == null) {
-            date = new Date();
+        date = parameters.get("TimeDate");
+        if (date == null) {
+            date = "today";
         }
-
-        Calendar cal = Calendar.getInstance();
-
-        String[] sa = d.split(" ");
-        for (String s: sa) {
-            switch (s) {
-                case "today":
-                    break;
-                case "tomorrow":
-                    cal.add(Calendar.DAY_OF_YEAR, 1);
-                    break;
-                case "tonight":
-                    cal.set(Calendar.HOUR_OF_DAY, 8);
-                    cal.set(Calendar.AM_PM, Calendar.PM);
-                case "morning":
-                    cal.set(Calendar.HOUR_OF_DAY, 8);
-                    cal.set(Calendar.AM_PM, Calendar.AM);
-                case "lunch":
-                    cal.set(Calendar.HOUR_OF_DAY, 12);
-                    cal.set(Calendar.AM_PM, Calendar.PM);
-                case "evening":
-                    cal.set(Calendar.HOUR_OF_DAY, 7);
-                    cal.set(Calendar.AM_PM, Calendar.PM);
-                case "afternoon":
-                    cal.set(Calendar.HOUR_OF_DAY, 4);
-                    cal.set(Calendar.AM_PM, Calendar.PM);
-                default:
-                   if (s.contains(":")) {
-                       String[] ta = d.split(":");
-                       if (ta.length == 2) {
-                           try {
-                               cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(ta[0]));
-                               cal.set(Calendar.HOUR_OF_DAY, Integer.parseInt(ta[1]));
-                           } catch (Exception e) {
-
-                           }
-                       }
-                   }
-            }
-        }
-        date = cal.getTime();
-
     }
 
     protected void parseContact() {

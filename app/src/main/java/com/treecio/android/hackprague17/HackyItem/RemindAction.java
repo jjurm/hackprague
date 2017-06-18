@@ -21,6 +21,6 @@ public class RemindAction extends CallAction {
     public RemindAction() {
         type = CallActionType.Remind;
         title = "Reminder from James Franco";
-        description = "Call you mom!";
+        description = "Call your mom!";
     }
 }
