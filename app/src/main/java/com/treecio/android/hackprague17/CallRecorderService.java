@@ -12,6 +12,7 @@ import com.treecio.android.hackprague17.model.Call;
 import com.treecio.android.hackprague17.storage.NotificationBuilder;
 import com.treecio.android.hackprague17.storage.StoragePort;
 
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,7 +27,7 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
             executor.submit(new Runnable() {
                 @Override
                 public void run() {
-                    voice.listen();
+                    voice.proceed();
                 }
             });
         }
@@ -34,7 +35,9 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
 
     private static final String TAG = CallRecorderService.class.getName();
 
-    private HackyVoice voice;
+    HackyVoice voice;
+    HackyListener listie;
+
     private static boolean onCall = false;
 
     public static final String EXTRA_SERVICE_ACTION = "extra_service_action";
@@ -85,6 +88,7 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
         super.onCreate();
         storagePort = new StoragePort(getApplicationContext());
         voice = new HackyVoice(getApplicationContext(), this);
+        listie = new HackyListener();
     }
 
     @Override
@@ -102,6 +106,7 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
 
     private void startRecording() { // when the call has been answered
         // use this.recordingId
+        Log.i(TAG, "Start recording!");
         date = new Date();
 
         if (!onCall) {
@@ -125,6 +130,9 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
     }
 
     private void finalizeCall() {
+
+        Log.i(TAG, "Finalizing");
+
 
         Call call = new Call(recordingId);
         call.setDate(date);
@@ -165,7 +173,18 @@ public class CallRecorderService extends Service implements ServiceNotifiesListe
                 }
 
             }
+        }
 
+        //get call actions
+
+        Log.i(TAG, "Getting actions");
+
+        try {
+            call.setCallActions(listie.process(voice.getData()));
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         // notif
