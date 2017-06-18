@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 
 import com.treecio.android.hackprague17.MainActivity;
 import com.treecio.android.hackprague17.R;
+import com.treecio.android.hackprague17.call.CallActionsActivity;
 import com.treecio.android.hackprague17.model.Call;
 
 import java.io.IOException;
@@ -39,7 +40,7 @@ public class NotificationBuilder {
                 .largeIcon(UriToBitmap(call.getPhoto()))
                 .title("Take action")
                 .message("Yo, check out the summary of your call with " + call.getCallerName() + " !")
-                .click(MainActivity.class) //Pali, sem pridaj aka aktivita sa ma spustit po tom co sa stlaci notifikacia
+                .click(CallActionsActivity.class) //Pali, sem pridaj aka aktivita sa ma spustit po tom co sa stlaci notifikacia
                 .vibrate(new long[]{300, 300})
                 .sound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .simple()

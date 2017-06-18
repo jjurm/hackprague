@@ -19,8 +19,7 @@
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp" />
+            android:layout_margin="16dp" />
 
         <TextView
             android:id="@+id/actionText"
@@ -33,7 +32,30 @@
             android:layout_toEndOf="@+id/actionIcon"
             android:text="Meeting in the Town Hall tomorrow at 5PM"
             android:textColor="@color/cardview_dark_background"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            />
+
+        <Button
+            android:id="@+id/actionShareButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/actionText"
+            android:layout_below="@+id/actionText"
+            android:layout_marginStart="47dp"
+            android:padding="2dp"
+            android:text="Open"
+            android:theme="@style/PrimaryFlatButton"/>
+
+        <Button
+            android:id="@+id/actionOpenButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/actionText"
+            android:layout_marginStart="33dp"
+            android:layout_toEndOf="@+id/actionShareButton"
+            android:padding="2dp"
+            android:text="Share"
+            android:theme="@style/PrimaryFlatButton"/>
 
     </RelativeLayout>
 
