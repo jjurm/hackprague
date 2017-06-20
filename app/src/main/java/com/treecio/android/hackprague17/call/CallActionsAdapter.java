@@ -115,9 +115,9 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
 
                         Calendar cal = Calendar.getInstance();
                         Calendar cal2 = Calendar.getInstance();
-                        cal.set(Calendar.HOUR_OF_DAY,18);
+                        cal.set(Calendar.HOUR_OF_DAY,19);
                         cal.set(Calendar.MINUTE,0);
-                        cal2.set(Calendar.HOUR_OF_DAY, 19);
+                        cal2.set(Calendar.HOUR_OF_DAY, 20);
                         cal2.set(Calendar.MINUTE, 0);
 
                         Date d1 = cal.getTime();
@@ -126,7 +126,7 @@ public class CallActionsAdapter extends RecyclerView.Adapter<CallActionsAdapter.
                         if(call.getId() == 4) {
                             ca.createSharedEvent(action.getDescription(), action.getTitle(), d1, d2, call.getEmail());
                         } else {
-                            ca.createSharedEvent(action.getDescription(), action.getTitle(), new Date(), new Date(), "pavol.drotar3@gmail.com");
+                            ca.createSharedEvent(action.getDescription(), action.getTitle(), new Date(), new Date(), call.getEmail());
                         }
                         break;
                     case Remind:
