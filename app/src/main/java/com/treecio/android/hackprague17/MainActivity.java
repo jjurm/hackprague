@@ -108,7 +108,18 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return false;
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.refresh:
+                refresh();
+                return true;
+            case R.id.reset:
+                reset();
+                refresh();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void reset() {
