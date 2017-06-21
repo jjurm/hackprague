@@ -2,6 +2,18 @@
 
 An awesome app which analyzes your phone calls and provides a list of possible actions based on them. Pure magic!
 
+The app was invented and developed as a project at the [HackPrague 2017](http://hackprague.com/) hackathon. We won the following prizes:
+
+- **2nd place**
+
+	Prize: 20 000 CZK (800 EUR)
+
+- **LondonTheatreDirect - The most innovative UX for mobile event discovery**
+
+	Prize: Oculus Rift HD VR
+
+	*Demonstration of the user journey from the first time use of the app to the discovery of the relevant event for the user. The prize will go to the most unconventional and creative approach.*
+
 ## Inspiration
 
 The realisation of the need to grab a pen in order to extract main information throughout a call was shocking. We were traveling by train and Juro, our team member, had to call a few people. He seemed very calm and happy about his call just until someone started telling him a plethora of stuff. Events, addresses, requests, everything. He stared looking for a pen in a real hurry. It did not take long until we have realised that there has to be a better way. This is where our idea stems from. 
@@ -18,18 +30,17 @@ The story begins with the app listening to a call you make. Just after that, you
 
 ## How we built it
 
-We used Google Speech for speech to text, API.AI for text processing and classification plus London Theatre Direct for information about nearby events.
+We used Google Speech for speech to text, API.AI for text processing and classification together with London Theatre Direct for information about nearby events.
 
 ## Challenges we ran into
 
-It is not trivial to name all the challenges since there were so many we barely remember the beginnings. Technically, there were two significant problems. Firstly, getting the speech recognition to work offline with continuous speech. Secondly, learning Android Studio along the way. 
+It is not trivial to name all the challenges since there were so many we barely remember the beginnings. Technically, there were two significant problems. Firstly, getting the speech recognition to work offline with continuous speech. Secondly, how to seamlessly connect all the components of the app.
 
-There were also some team challenges as for the majority of us this is our first Hackathon.
+There were also some team challenges as for the majority of us this was our first Hackathon.
 
 ## Accomplishments that we're proud of
 
-We can't honestly name major accomplishments. We enjoy tackling challenges step-by-step and every time we feel like we are marching forward we get a huge sense of fulfillment. Our biggest strides are currently in these finishing touches of the whole project.
-
+We enjoy tackling challenges step-by-step and every time we feel like we are marching forward we get a huge sense of fulfillment. Our biggest strides are always in the finishing touches of the whole project.
 
 ## What we learned
 
@@ -39,3 +50,13 @@ Of course we worked with a number of tools such as API.AI or Google Speech which
 
 A lot of hustle and hopefully a snippet of luck.
 
+## Authors
+
+- Eduard Čuba ([edynox](https://github.com/edynox))
+- Pavol Drotár ([padr31](https://github.com/padr31))
+- Juraj Mičko ([jjurm](https://github.com/jjurm))
+- Michal Pándy ([mpmisko](https://github.com/mpmisko))
+
+## Screenshots
+
+<img src="https://github.com/jjurm/hackprague/raw/master/screenshots/main_activity.png" alt="Main activity" width="216" height="384" /> <img src="https://github.com/jjurm/hackprague/raw/master/screenshots/call_detail.png" alt="Call detail" width="216" height="384" /> <img src="https://github.com/jjurm/hackprague/raw/master/screenshots/call.png" alt="Call" width="216" height="384" /> <img src="https://github.com/jjurm/hackprague/raw/master/screenshots/notification.png" alt="Notification" width="216" height="384" /> <img src="https://github.com/jjurm/hackprague/raw/master/screenshots/google_calendar.png" alt="Google Calendar" width="216" height="384" /> <img src="https://github.com/jjurm/hackprague/raw/master/screenshots/google_maps.png" alt="Google Maps" width="216" height="384" />
