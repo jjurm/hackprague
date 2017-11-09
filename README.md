@@ -13,6 +13,10 @@ The app was invented and developed as a project at the [HackPrague 2017](http://
 	Prize: Oculus Rift HD VR
 
 	*Demonstration of the user journey from the first time use of the app to the discovery of the relevant event for the user. The prize will go to the most unconventional and creative approach.*
+	
+We kept going and released the app to Play Store for beta testers. Find more at [summapp.io](http://summapp.io/).
+
+*Note: Source code written after the hackathon is not public.*
 
 ## Inspiration
 
